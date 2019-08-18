@@ -1,0 +1,25 @@
+<mat-card>
+    <section class="mat-typograpghy">
+        <h3>Files</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <mat-nav-list class="lists_class">
+        <div *ngFor="let dir of dirs" >
+            <a mat-list-item (click)="getDir(dir.path)" class="link_class">
+                {{ dir.name }}&nbsp;>
+            </a>  
+        </div>
+    </mat-nav-list>
+    <br><br>
+    <mat-nav-list>
+        <div *ngFor="let file of filesObject" >
+            <a mat-list-item *ngIf="file.type === 'folder'" (click)="getDir(file.name)">
+                <fa-icon [icon]="faFolder"></fa-icon>&nbsp;&nbsp;{{ file.name }} 
+            </a>
+            <a mat-list-item *ngIf="file.type === 'file'" (click)="getFile(file.name)">
+                <fa-icon [icon]="faFile"></fa-icon>&nbsp;&nbsp;{{ file.name }}
+            </a>
+
+        </div>
+    </mat-nav-list>
+</mat-card>     

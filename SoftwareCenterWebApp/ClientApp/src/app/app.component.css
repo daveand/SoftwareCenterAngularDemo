@@ -1,0 +1,25 @@
+.mat-toolbar {
+  background-color: steelblue;
+  color: white;
+}
+
+.arrow-box {
+  width: 25px;
+  margin-top: 10px;
+  margin-left: -1px;
+  border: 1px solid lightgrey;
+  border-left: 1px solid white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: white;
+  color: gray;
+}
+
+.mat-card-top {
+  height: 40px;
+  padding: 5px 5px 5px 5px;
+  margin-top: -35px;
+  /*margin-bottom: -10px;*/
+  margin-left: 40px;
+  margin-right: 40px;
+}

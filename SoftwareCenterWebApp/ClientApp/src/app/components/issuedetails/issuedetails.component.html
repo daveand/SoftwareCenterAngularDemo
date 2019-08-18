@@ -1,0 +1,28 @@
+<mat-card>
+    <section class="mat-typograpghy">
+        <h3>Issue - {{issue.title}}</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+<div class="row">
+    <div class="col col-12 col-lg-4">
+        Details:
+        <br><br>
+        Responsible <br>
+        {{issue.responsible}}
+        <br><br>
+        Customer <br>
+        {{issue.customer.title}}
+        <br><br>
+        Severity <br>
+        {{issue.severity}}
+
+    </div>
+    <div class="col col-12 col-lg-4">
+        Description
+        <br><br>
+        {{issue.description}}
+    </div>   
+</div>
+</mat-card>    
+

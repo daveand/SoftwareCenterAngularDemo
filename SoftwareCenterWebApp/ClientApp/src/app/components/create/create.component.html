@@ -1,0 +1,36 @@
+<div>
+    <br>
+    <mat-card>
+        <section class="mat-typograpghy">
+            <h3>Create new issue!</h3>
+        </section>
+        <mat-divider></mat-divider>
+        <br>
+        <form [formGroup]="createForm" class="create-form">
+            <mat-form-field class="field-full-width">
+                <input matInput placeholder="Issue Title" formControlName="title" #title>
+            </mat-form-field>
+            <mat-form-field class="field-full-width">
+                <input matInput placeholder="Responsible" formControlName="responsible" #responsible>
+            </mat-form-field>
+            <mat-form-field class="field-full-width">
+                <mat-select placeholder="Customer" formControlName="customer" #customer>
+                    <mat-option *ngFor="let customer of customers" [value]="customer._id">{{customer.title}}</mat-option>
+                </mat-select>
+            </mat-form-field>            
+            <mat-form-field class="field-full-width">
+                <textarea matInput placeholder="Description" rows="15" formControlName="description" #description></textarea>
+            </mat-form-field>
+            <mat-form-field class="field-full-width">
+                <mat-select placeholder="Severity" formControlName="severity" #severity>
+                    <mat-option *ngFor="let item of severeties" [value]="item">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <br>
+            <br>
+            <button mat-raised-button color="accent" routerLink="/list">Back</button>
+            <button type="submit" (click)="addIssue(title.value, responsible.value, customer.value, description.value, severity.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary" >Create</button>
+        </form>
+    </mat-card>
+</div>
