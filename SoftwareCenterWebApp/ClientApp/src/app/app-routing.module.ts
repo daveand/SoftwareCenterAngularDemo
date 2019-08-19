@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdalService, AdalGuard } from '../../node_modules/adal-angular4';
+import { AuthGuard } from './auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { CreateComponent } from './components/create/create.component';
 import { EditComponent } from './components/edit/edit.component';
@@ -15,7 +17,7 @@ const routes: Routes = [
   { path: 'edit/:id', component: EditComponent },
   { path: 'list', component: ListComponent },
   { path: 'files', component: FilesComponent },
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

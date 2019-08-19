@@ -2,7 +2,12 @@
   <button mat-icon-button>
     <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
   </button>
-  <h1>MEAN Stack</h1>
+  <span>Atlas Copco CC Nordic - Service Management</span>
+  <span class="example-spacer"></span>
+  <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+  <span style="font-size: 14px;">{{this.adalService.userInfo.userName}}</span>
+  <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon" (click)="logOut()">logout_user</mat-icon>
+
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" opened="true" disableClose="true">

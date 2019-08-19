@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdalService } from 'adal-angular4';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private adalService: AdalService) { }
 
   ngOnInit() {
+    this.adalService.getUser();
+
   }
 
 }

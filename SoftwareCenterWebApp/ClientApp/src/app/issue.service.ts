@@ -1,21 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Component, Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Issue } from './issue.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class IssueService {
 
-  url = 'http://localhost:3000/api';
+  url;
+  
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.url = baseUrl;
+  }
 
   getCustomers() {
-    return this.http.get(`${this.url}/customers`);
+    return this.http.get(this.url + 'api/customers');
   }
 
   getIssues() {
-    return this.http.get(`${this.url}/issues`);
+
+    return this.http.get(this.url + 'api/issues/issues');
   }
 
   getIssueById(id) {

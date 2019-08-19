@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { AdalService, AdalGuard } from '../../node_modules/adal-angular4';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -59,6 +59,8 @@ import { IssuesComponent } from './components/issues/issues.component';
 import { IssuedetailsComponent } from './components/issuedetails/issuedetails.component';
 import { HomeComponent } from './components/home/home.component';
 import { FilesComponent } from './components/files/files.component';
+import { AuthGuard } from './auth.guard';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import { FilesComponent } from './components/files/files.component';
     IssuesComponent,
     IssuedetailsComponent,
     HomeComponent,
-    FilesComponent
+    FilesComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -121,7 +124,7 @@ import { FilesComponent } from './components/files/files.component';
     PortalModule,
     ScrollingModule
   ],
-  providers: [],
+  providers: [AuthGuard, AdalService, AdalGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
