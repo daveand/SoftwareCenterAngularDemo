@@ -1,9 +1,9 @@
 export interface Issue {
-    id: string;
-    title: string;
-    responsible: string;
-    customer: string;
-    description: string;
-    severity: string;
-    status: string;
+    Id: string;
+    Title: string;
+    Responsible: string;
+    Customer: string;
+    Description: string;
+    Severity: string;
+    Status: string;
 }

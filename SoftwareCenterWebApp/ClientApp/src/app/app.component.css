@@ -1,6 +1,14 @@
-.mat-toolbar {
-  background-color: steelblue;
+.navbar {
+  background-color: rgba(53, 63, 72, 1) !important;
+  /*background-color: steelblue;*/
   color: white;
+}
+
+.menu-icon {
+  margin-left: -10px;
+  margin-right: 10px;
+  margin-bottom: 7px;
+  color: rgba(53, 63, 72, 1);
 }
 
 .arrow-box {

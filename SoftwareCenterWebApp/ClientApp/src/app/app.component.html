@@ -1,21 +1,62 @@
-<mat-toolbar>
+<!--<mat-toolbar>
   <button mat-icon-button>
     <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
   </button>
   <span>Atlas Copco CC Nordic - Service Management</span>
   <span class="example-spacer"></span>
   <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
-  <span style="font-size: 14px;">{{this.adalService.userInfo.userName}}</span>
+  <span style="font-size: 14px;">{{this.adalService.userInfo.userName}} - {{role}}</span>
   <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon" (click)="logOut()">logout_user</mat-icon>
 
-</mat-toolbar>
+</mat-toolbar>-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!--<button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>-->
+    <a class="navbar-brand" href="#">Service Management</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ">
+          <a class="nav-link active" href="#">
+            <mat-icon class="" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+            
+          </a>
+
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link active" href="#">
+            {{this.adalService.userInfo.userName}} - {{role}}
+          </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link active" href="#">
+            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon" (click)="logOut()">logout_user</mat-icon>
+          </a>
+
+        </li>
+
+
+
+      </ul>
+
+    </div>
+  </nav>
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" opened="true" disableClose="true">
 
     <mat-nav-list>
-      <a mat-list-item [routerLink]="'/issues'" skipLocationChange> Issues </a>
+      <a mat-list-item [routerLink]="'/'" skipLocationChange><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">home</mat-icon>Dashboard </a>
+      <a mat-list-item [routerLink]="'/issues'" skipLocationChange><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">report_problem</mat-icon>Issues </a>
+      <a mat-list-item [routerLink]="'/files'" skipLocationChange><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">check_circle</mat-icon>Actions </a>
+      <a mat-list-item [routerLink]="'/files'" skipLocationChange><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">build</mat-icon>Projects </a>
       <a mat-list-item [routerLink]="'/create'" skipLocationChange> New Issue </a>
-      <a mat-list-item [routerLink]="'/files'" skipLocationChange> Files </a>
+      <a mat-list-item [routerLink]="'/files'" skipLocationChange><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">insert_drive_file</mat-icon>Files </a>
+      <a mat-list-item [routerLink]="'/files'" skipLocationChange><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">assignment_ind</mat-icon>Customers </a>
+      <a mat-list-item [routerLink]="'/files'" skipLocationChange><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">help</mat-icon>Knowledge DB </a>
 
     </mat-nav-list>
   </mat-sidenav>
@@ -31,3 +72,5 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+
