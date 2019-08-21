@@ -38,7 +38,7 @@ namespace SoftwareCenterWebApp
 
             services.AddDbContext<AppDbContext>(options =>
               options.UseSqlServer(
-                  Configuration.GetConnectionString("AppDbContext")));
+                  Configuration.GetConnectionString("AzureDb")));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

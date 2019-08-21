@@ -21,7 +21,7 @@ export class IssueService {
   }
 
   getIssueById(id) {
-    return this.http.get(`${this.url}/issues/${id}`);
+    return this.http.get(`${this.url}api/issues/getissuebyid/${id}`);
   }
 
   addIssue(title, responsible, customerId, description, priority) {

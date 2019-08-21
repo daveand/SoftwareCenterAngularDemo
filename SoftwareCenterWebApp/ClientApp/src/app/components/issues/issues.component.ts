@@ -92,11 +92,11 @@ export class IssuesComponent implements OnInit {
   }
 
   detailsIssue(id) {
-    this.router.navigate([`/issuedetails/${id}`], { skipLocationChange: true });
+    this.router.navigate([`/issuedetails/${id}`]);
   }
 
   editIssue(id) {
-    this.router.navigate([`/edit/${id}`], { skipLocationChange: true });
+    this.router.navigate([`/edit/${id}`]);
   }
 
   deleteIssue(id) {

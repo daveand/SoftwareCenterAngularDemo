@@ -54,7 +54,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { IssuesEditComponent } from './components/issues/edit/edit.component';
 // import { IssueService } from './issue.service';
 import { IssuesComponent, IssuesCreateDialog } from './components/issues/issues.component';
-import { IssuedetailsComponent } from './components/issuedetails/issuedetails.component';
+import { IssuedetailsComponent } from './components/issues/details/details.component';
 import { HomeComponent } from './components/home/home.component';
 import { FilesComponent } from './components/files/files.component';
 import { AuthGuard } from './auth.guard';

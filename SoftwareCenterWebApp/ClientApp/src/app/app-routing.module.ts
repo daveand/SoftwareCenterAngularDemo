@@ -5,7 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { HomeComponent } from './components/home/home.component';
 import { IssuesEditComponent } from './components/issues/edit/edit.component';
 import { IssuesComponent } from './components/issues/issues.component';
-import { IssuedetailsComponent } from './components/issuedetails/issuedetails.component';
+import { IssuedetailsComponent } from './components/issues/details/details.component';
 import { FilesComponent } from './components/files/files.component';
 import { CustomersComponent } from './components/customers/customers.component';
 

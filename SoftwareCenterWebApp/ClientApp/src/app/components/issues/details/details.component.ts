@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from '../../models/customer.model';
+import { Customer } from '../../../models/customer.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { IssueService } from '../../services/issue.service';
+import { IssueService } from '../../../services/issue.service';
 
 @Component({
   selector: 'app-issuedetails',
-  templateUrl: './issuedetails.component.html',
-  styleUrls: ['./issuedetails.component.css']
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.css']
 })
 export class IssuedetailsComponent implements OnInit {
 
@@ -26,6 +26,7 @@ export class IssuedetailsComponent implements OnInit {
       this.id = params.id;
       this.issueService.getIssueById(this.id).subscribe(res => {
         this.issue = res;
+        console.log(this.issue);
       });
     });
   }

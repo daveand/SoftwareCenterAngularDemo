@@ -13,8 +13,7 @@
         <mat-divider></mat-divider>
         <br>
         <br>
-        <button mat-raised-button color="accent" routerLink="/list">Back</button>
-        <button type="submit" (click)="addCustomer(name.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Create</button>
+        <button type="submit" (click)="addCustomer(name.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Add</button>
       </form>
     </mat-card>
 

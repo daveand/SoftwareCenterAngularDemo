@@ -4,36 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SoftwareCenterWebApp.Migrations
 {
-    public partial class removemodels : Migration
+    public partial class initialazure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Actions");
-
-            migrationBuilder.DropTable(
-                name: "CustomerContacts");
-
-            migrationBuilder.DropTable(
-                name: "Issues");
-
-            migrationBuilder.DropTable(
-                name: "Knowledges");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "Agreements");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "Products");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Agreements",
@@ -41,8 +14,8 @@ namespace SoftwareCenterWebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,20 +54,35 @@ namespace SoftwareCenterWebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClosedDate = table.Column<DateTime>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Files = table.Column<string>(nullable: true),
-                    ProjectLeader = table.Column<string>(nullable: true),
                     ProjectNumber = table.Column<string>(nullable: true),
                     RespTech = table.Column<string>(nullable: true),
+                    ProjectLeader = table.Column<string>(nullable: true),
                     SalesRep = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Files = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ClosedDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Group = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,10 +92,10 @@ namespace SoftwareCenterWebApp.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CustomerId = table.Column<int>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Position = table.Column<string>(nullable: true)
+                    Position = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,17 +114,17 @@ namespace SoftwareCenterWebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AgreementId = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    DoneDate = table.Column<DateTime>(nullable: false),
-                    Notes = table.Column<string>(nullable: true),
-                    Priority = table.Column<string>(nullable: true),
-                    ProductId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     Responsible = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    CustomerId = table.Column<int>(nullable: false),
+                    AgreementId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Notes = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    DoneDate = table.Column<DateTime>(nullable: false),
+                    Priority = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -167,18 +155,18 @@ namespace SoftwareCenterWebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AgreementId = table.Column<int>(nullable: false),
-                    CloseDate = table.Column<DateTime>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Responsible = table.Column<string>(nullable: true),
                     CustomerId = table.Column<int>(nullable: false),
+                    AgreementId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Notes = table.Column<string>(nullable: true),
-                    Priority = table.Column<string>(nullable: true),
-                    ProductId = table.Column<int>(nullable: false),
                     Remedy = table.Column<string>(nullable: true),
-                    Responsible = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    CloseDate = table.Column<DateTime>(nullable: false),
+                    Priority = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -209,12 +197,12 @@ namespace SoftwareCenterWebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AgreementId = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
                     CustomerId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    AgreementId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -288,6 +276,36 @@ namespace SoftwareCenterWebApp.Migrations
                 name: "IX_Knowledges_ProductId",
                 table: "Knowledges",
                 column: "ProductId");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Actions");
+
+            migrationBuilder.DropTable(
+                name: "CustomerContacts");
+
+            migrationBuilder.DropTable(
+                name: "Issues");
+
+            migrationBuilder.DropTable(
+                name: "Knowledges");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Agreements");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Products");
         }
     }
 }

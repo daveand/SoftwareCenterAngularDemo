@@ -10,8 +10,8 @@ using SoftwareCenterWebApp.Data;
 namespace SoftwareCenterWebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190820175051_addusersmodel")]
-    partial class addusersmodel
+    [Migration("20190821113337_initialazure")]
+    partial class initialazure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

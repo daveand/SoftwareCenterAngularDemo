@@ -30,10 +30,10 @@ namespace SoftwareCenterWebApp.Controllers
         }
 
         [HttpPost("[action]")]
-        public String CreateCustomer([FromBody] CustomerModel customer)
+        public async Task<String> CreateCustomer([FromBody] CustomerModel customer)
         {
             _context.Add(customer);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return null;
 
         }

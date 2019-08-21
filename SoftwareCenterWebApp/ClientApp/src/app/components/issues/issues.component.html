@@ -35,7 +35,6 @@
         <mat-divider></mat-divider>
         <br>
         <br>
-        <button mat-raised-button color="accent" routerLink="/list">Back</button>
         <button type="submit" (click)="addIssue(title.value, responsible.value, customerId.value, description.value, priority.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Create</button>
       </form>
     </mat-card>

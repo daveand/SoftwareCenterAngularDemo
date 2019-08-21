@@ -31,8 +31,18 @@ namespace SoftwareCenterWebApp.Controllers
             return JsonConvert.SerializeObject(issues);
         }
 
+        [HttpGet("[action]/{id:int}")]
+        public async Task<String> GetIssueById(int id)
+        {
+
+            var issue = await _context.Issues.Include(m => m.Customer).FirstOrDefaultAsync(i => i.Id == id);
+
+            return JsonConvert.SerializeObject(issue);
+        }
+
+
         [HttpPost("[action]")]
-        public String CreateIssue([FromBody] IssueModel issue)
+        public async Task<String> CreateIssue([FromBody] IssueModel issue)
         {
             issue.CreatedDate = DateTime.Now;
             issue.AgreementId = 1;
@@ -40,18 +50,18 @@ namespace SoftwareCenterWebApp.Controllers
             issue.Status = "Open";
 
             _context.Add(issue);
-            _context.SaveChangesAsync();
+            var success = await _context.SaveChangesAsync();
             return null;
 
         }
 
         [HttpDelete("[action]/{id:int}")]
-        public String Delete(int id)
+        public async Task<String> Delete(int id)
         {
 
-            var issue = _context.Issues.Find(id);
+            var issue = await _context.Issues.FindAsync(id);
             _context.Issues.Remove(issue);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return null;
 
         }

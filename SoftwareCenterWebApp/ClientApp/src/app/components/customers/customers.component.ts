@@ -47,7 +47,7 @@ export class CustomersComponent implements OnInit {
   addCustomer(name) {
     this.customerService.addCustomer(name).subscribe(() => {
       // this.router.navigate(['/issues']);
-      this.snackBar.open('New issue added!', 'Close');
+      this.snackBar.open('New customer added!', 'Close');
       this.ngOnInit();
     });
   }
