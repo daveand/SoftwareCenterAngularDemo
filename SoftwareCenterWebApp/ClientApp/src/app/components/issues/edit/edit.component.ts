@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from '../../customer.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { IssueService } from '../../issue.service';
-import { Issue } from '../../issue.model';
+import { IssueService } from '../../../services/issue.service';
+import { CustomerService } from '../../../services/customer.service';
+import { Issue } from '../../../models/issue.model';
+import { Customer } from '../../../models/customer.model';
 
 @Component({
-  selector: 'app-edit',
+  selector: 'app-issuesedit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class IssuesEditComponent implements OnInit {
 
   customers: Customer[];
 
@@ -23,6 +24,7 @@ export class EditComponent implements OnInit {
 
   constructor(
     private issueService: IssueService,
+    private customerService: CustomerService,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
@@ -42,7 +44,7 @@ export class EditComponent implements OnInit {
   }
 
   fetchCustomers() {
-    this.issueService
+    this.customerService
       .getCustomers()
       .subscribe((data: Customer[]) => {
         this.customers = data;

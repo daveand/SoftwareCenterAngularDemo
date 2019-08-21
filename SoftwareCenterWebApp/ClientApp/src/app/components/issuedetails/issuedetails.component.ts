@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from '../../customer.model';
+import { Customer } from '../../models/customer.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { IssueService } from '../../issue.service';
+import { IssueService } from '../../services/issue.service';
 
 @Component({
   selector: 'app-issuedetails',

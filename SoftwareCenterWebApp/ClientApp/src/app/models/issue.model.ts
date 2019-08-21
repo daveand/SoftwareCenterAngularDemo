@@ -1,9 +1,13 @@
+import { Customer } from './customer.model';
+ 
+
 export interface Issue {
     Id: string;
     Title: string;
     Responsible: string;
-    Customer: string;
+    CustomerId: string;
     Description: string;
-    Severity: string;
+    Priority: string;
     Status: string;
+    Customer: Customer;
 }

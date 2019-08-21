@@ -3,19 +3,18 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdalService, AdalGuard } from '../../node_modules/adal-angular4';
 import { AuthGuard } from './auth.guard';
 import { HomeComponent } from './components/home/home.component';
-import { CreateComponent } from './components/create/create.component';
-import { EditComponent } from './components/edit/edit.component';
-import { ListComponent } from './components/list/list.component';
+import { IssuesEditComponent } from './components/issues/edit/edit.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { IssuedetailsComponent } from './components/issuedetails/issuedetails.component';
 import { FilesComponent } from './components/files/files.component';
+import { CustomersComponent } from './components/customers/customers.component';
+
 
 const routes: Routes = [
+  { path: 'customers', component: CustomersComponent },
   { path: 'issues', component: IssuesComponent },
   { path: 'issuedetails/:id', component: IssuedetailsComponent },
-  { path: 'create', component: CreateComponent },
-  { path: 'edit/:id', component: EditComponent },
-  { path: 'list', component: ListComponent },
+  { path: 'Issues/edit/:id', component: IssuesEditComponent },
   { path: 'files', component: FilesComponent },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 ];

@@ -51,28 +51,27 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 
 
-import { ListComponent } from './components/list/list.component';
-import { CreateComponent } from './components/create/create.component';
-import { EditComponent } from './components/edit/edit.component';
+import { IssuesEditComponent } from './components/issues/edit/edit.component';
 // import { IssueService } from './issue.service';
-import { IssuesComponent } from './components/issues/issues.component';
+import { IssuesComponent, IssuesCreateDialog } from './components/issues/issues.component';
 import { IssuedetailsComponent } from './components/issuedetails/issuedetails.component';
 import { HomeComponent } from './components/home/home.component';
 import { FilesComponent } from './components/files/files.component';
 import { AuthGuard } from './auth.guard';
 import { LogoutComponent } from './components/logout/logout.component';
+import { CustomersComponent } from './components/customers/customers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListComponent,
-    CreateComponent,
-    EditComponent,
+    IssuesEditComponent,
     IssuesComponent,
+    IssuesCreateDialog,
     IssuedetailsComponent,
     HomeComponent,
     FilesComponent,
-    LogoutComponent
+    LogoutComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule,
@@ -124,6 +123,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     PortalModule,
     ScrollingModule
   ],
+  entryComponents: [IssuesComponent, IssuesCreateDialog],
   providers: [AuthGuard, AdalService, AdalGuard],
   bootstrap: [AppComponent]
 })

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FilesService } from '../../files.service';
+import { FilesService } from '../../services/files.service';
 import { faFolder } from '@fortawesome/free-regular-svg-icons';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 
-import { Files } from '../../files.model';
+import { Files } from '../../models/files.model';
 
 
 @Component({

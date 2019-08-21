@@ -1,6 +1,6 @@
 import { Component, Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Issue } from './issue.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Issue } from '../models/issue.model';
 
 
 @Injectable({
@@ -10,33 +10,35 @@ export class IssueService {
 
   url;
   
-
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.url = baseUrl;
   }
 
-  getCustomers() {
-    return this.http.get(this.url + 'api/customers');
-  }
 
   getIssues() {
 
-    return this.http.get(this.url + 'api/issues/issues');
+    return this.http.get(this.url + 'api/issues/getissues');
   }
 
   getIssueById(id) {
     return this.http.get(`${this.url}/issues/${id}`);
   }
 
-  addIssue(title, responsible, customer, description, severity) {
+  addIssue(title, responsible, customerId, description, priority) {
     const issue = {
       title,
       responsible,
-      customer,
+      customerId,
       description,
-      severity
+      priority
     };
-    return this.http.post(`${this.url}/issues/add`, issue);
+    console.log('IssueService ', issue);
+
+    return this.http.post(`${this.url}api/issues/createissue`, issue, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        })
+      });
   }
 
   updateIssue(id, title, responsible, customer, description, severity, status) {
@@ -48,11 +50,11 @@ export class IssueService {
       severity,
       status
     };
-    return this.http.post(`${this.url}/issues/update/${id}`, issue);
+    return this.http.post(`${this.url}api/issues/update/${id}`, issue);
   }
 
   deleteIssue(id) {
-    return this.http.get(`${this.url}/issues/delete/${id}`);
+    return this.http.delete(`${this.url}api/issues/delete/${id}`);
   }
 
 

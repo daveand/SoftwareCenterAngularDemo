@@ -1,9 +1,87 @@
 <div class="row">
-    <div class="col col-12 col-lg-4">
-        <app-create></app-create>  
-    </div>
-    <div class="col col-12 col-lg-8">
-        <app-list></app-list>
-    </div>   
+  <div class="col col-12 col-lg-4">
+    <mat-card>
+      <section class="mat-typograpghy">
+        <h3>Create new issue</h3>
+      </section>
+      <mat-divider></mat-divider>
+      <br>
+      <form [formGroup]="createForm" class="create-form">
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Issue Title" formControlName="title" #title>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Responsible" formControlName="responsible" #responsible>
+            <mat-option [value]="this.adalService.userInfo.profile.name">Me: {{this.adalService.userInfo.profile.name}}</mat-option>
+            <mat-divider></mat-divider>
+            <mat-option *ngFor="let user of users" [value]="user.Name">{{user.Name}} ({{user.Email}})</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Customer" formControlName="customerId" #customerId>
+            <mat-option (click)="openDialog()">New Customer...</mat-option>
+            <mat-option *ngFor="let customer of customers" [value]="customer.Id">{{customer.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <textarea matInput placeholder="Description" rows="15" formControlName="description" #description></textarea>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Priority" formControlName="priority" #priority>
+            <mat-option *ngFor="let item of priorities" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <br>
+        <br>
+        <button mat-raised-button color="accent" routerLink="/list">Back</button>
+        <button type="submit" (click)="addIssue(title.value, responsible.value, customerId.value, description.value, priority.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Create</button>
+      </form>
+    </mat-card>
+
+  </div>
+  <div class="col col-12 col-lg-8">
+    <mat-card>
+      <section class="mat-typograpghy">
+        <h3>Issues</h3>
+      </section>
+      <mat-divider></mat-divider>
+      <br>
+      <table mat-table [dataSource]="issues">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="responsible">
+          <th mat-header-cell *matHeaderCellDef>Responsible</th>
+          <td mat-cell *matCellDef="let element"> {{element.Responsible}} </td>
+        </ng-container>
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef>Customer</th>
+          <td mat-cell *matCellDef="let element"> {{element.Customer.Name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef>Priority</th>
+          <td mat-cell *matCellDef="let element"> {{element.Priority}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
+          <td mat-cell *matCellDef="let element" class="mat-column-right">
+            <button mat-button color="primary" (click)="detailsIssue(element.Id)">Details</button>
+            <button mat-button color="primary" (click)="editIssue(element.Id)">Edit</button>
+            <button mat-button color="primary" (click)="deleteIssue(element.Id)">Delete</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card>
+
+  </div>   
 </div>
 

@@ -2,6 +2,8 @@ import { environment } from './../environments/environment';
 import { AdalService } from 'adal-angular4';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsersService } from './services/users.service';
+import { User } from './models/user.model';
 
 import { MatSidenav } from '@angular/material/sidenav';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
@@ -14,13 +16,17 @@ import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent {
 
-  role: string;
-
-  constructor(private adalService: AdalService, private router: Router ) {
+  constructor(
+    private usersService: UsersService,
+    private adalService: AdalService,
+    private router: Router) {
     this.router = router;
     adalService.init(environment.authConfig);
   }
 
+  users: User[];
+
+  role: string;
 
   ngOnInit() {
     // Handle callback if this is a redirect from Azure
@@ -34,11 +40,38 @@ export class AppComponent {
     if (!this.adalService.userInfo.authenticated) {
       this.adalService.login(); //redirects to company AD url
     } else if (this.adalService.userInfo.authenticated) {
+      this.addUserToDb();
       console.log("Logged in");
+      console.log(this.adalService.userInfo.profile.name);
       console.log(this.adalService.userInfo.userName);
       console.log(this.adalService.userInfo.profile.groups);
+    }
+
     } 
+
+
+  addUserToDb() {
+    this.usersService
+      .getUsers()
+      .subscribe((data: User[]) => {
+        this.users = data;
+        console.log('Users in DB:');
+        console.log(data);
+
+        let userAlreadyExist = this.users.find(user => user.Email === this.adalService.userInfo.userName);
+        if (!userAlreadyExist) {
+          var name = this.adalService.userInfo.profile.name;
+          var email = this.adalService.userInfo.userName;
+          var group = this.adalService.userInfo.profile.groups[0];
+          console.log('User added to DB');
+          this.usersService.addUser(name, email, group).subscribe(() => {
+          });
+        } else {
+          console.log('User already in DB');
+        }
+      });
   }
+
 
   @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
   title = 'ClientApp';
