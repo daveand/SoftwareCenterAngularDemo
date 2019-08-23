@@ -49,8 +49,18 @@ namespace SoftwareCenterWebApp.Controllers
             issue.ProductId = 1;
             issue.Status = "Open";
 
-            _context.Add(issue);
+            _context.Issues.Add(issue);
             var success = await _context.SaveChangesAsync();
+            return null;
+
+        }
+
+        [HttpPost("[action]")]
+        public async Task<String> Update([FromBody] IssueModel issue)
+        {
+
+            _context.Issues.Update(issue);
+            await _context.SaveChangesAsync();
             return null;
 
         }

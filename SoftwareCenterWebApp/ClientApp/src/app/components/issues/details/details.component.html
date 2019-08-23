@@ -1,26 +1,45 @@
 <mat-card>
-    <section class="mat-typograpghy">
-        <h3>Issue - {{issue.Title}}</h3>
-    </section>
-    <mat-divider></mat-divider>
-    <br>
-<div class="row">
-  <div class="col col-12 col-lg-4">
-    Responsible <br>
-    {{issue.Responsible}}
-    <br><br>
-    Customer <br>
-    {{issue.Customer.Name}}
-    <br><br>
-    Severity <br>
-    {{issue.Priority}}
+  <section class="mat-typograpghy">
+    <h3>Issue: {{issue.Title}}</h3>
+  </section>
+  <mat-divider></mat-divider>
+  <br>
+  <div class="row">
+    <div class="col col-12 col-lg-3">
+      Responsible: <br>
+      {{issue.Responsible}}
+      <br><br>
+      Customer: <br>
+      {{issue.Customer.Name}}
+      <br><br>
+      Severity: <br>
+      {{issue.Priority}}
+      <br><br>
+      Created: <br>
+      {{issue.CreatedDate}}
+
+
+    </div>
+    <div class="col col-12 col-lg-3">
+      Description:
+      <br><br>
+      {{issue.Description}}
+    </div>
+    <div class="col col-12 col-lg-3">
+      Notes:
+      <br><br>
+      {{issue.Notes}}
+    </div>
+    <div class="col col-12 col-lg-3">
+      Remedy:
+      <br><br>
+      {{issue.Remedy}}
+    </div>
+
 
   </div>
-    <div class="col col-12 col-lg-4">
-        Description
-        <br><br>
-        {{issue.Description}}
-    </div>   
-</div>
+  <br /><br />
+  <button mat-raised-button color="accent" routerLink="/issues" skipLocationChange>Back</button>&nbsp;
+
 </mat-card>    
 

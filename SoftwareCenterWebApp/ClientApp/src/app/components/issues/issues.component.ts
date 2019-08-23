@@ -96,7 +96,7 @@ export class IssuesComponent implements OnInit {
   }
 
   editIssue(id) {
-    this.router.navigate([`/edit/${id}`]);
+    this.router.navigate([`issues/edit/${id}`]);
   }
 
   deleteIssue(id) {

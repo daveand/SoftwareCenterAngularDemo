@@ -30,7 +30,7 @@ export class IssueService {
       responsible,
       customerId,
       description,
-      priority
+      priority,
     };
     console.log('IssueService ', issue);
 
@@ -41,16 +41,28 @@ export class IssueService {
       });
   }
 
-  updateIssue(id, title, responsible, customer, description, severity, status) {
+  updateIssue(id, title, responsible, customerId, agreementId, productId, description, notes, remedy, createdDate, priority, status) {
     const issue = {
+      id,
       title,
       responsible,
-      customer,
+      customerId,
+      agreementId,
+      productId,
       description,
-      severity,
+      notes,
+      remedy,
+      createdDate,
+      priority,
       status
     };
-    return this.http.post(`${this.url}api/issues/update/${id}`, issue);
+    console.log('Update: ', issue);
+
+    return this.http.post(`${this.url}api/issues/update`, issue, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    });
   }
 
   deleteIssue(id) {

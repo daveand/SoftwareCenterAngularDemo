@@ -1,41 +1,51 @@
 <div>
-        <br>
-        <mat-card>
-          <section class="mat-typography">
-            <h3>Update Issue</h3>
-          </section>
-          <mat-divider></mat-divider>
-          <br>
-          <form [formGroup]="updateForm" class="edit-form">
-            <mat-form-field class="field-full-width">
-              <input matInput placeholder="Issue Title" formControlName="title" #title>
-            </mat-form-field>
-            <mat-form-field class="field-full-width">
-              <input matInput placeholder="Responsible" formControlName="responsible" #responsible>
-            </mat-form-field>
-            <mat-form-field class="field-full-width">
-                <mat-select placeholder="Customer" formControlName="customer" #customer>
-                    <mat-option *ngFor="let customer of customers" [value]="customer._id">{{customer.title}}</mat-option>
-                </mat-select>
-            </mat-form-field>            
-            <mat-form-field class="field-full-width">
-              <textarea matInput placeholder="Description" formControlName="description" #description></textarea>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Severity" formControlName="severity" #severity>
-                    <mat-option *ngFor="let item of severeties" [value]="item">{{item}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <mat-select placeholder="Status" formControlName="status" #status>
-                    <mat-option *ngFor="let item of statuses" [value]="item">{{item}}</mat-option>
-                </mat-select>            
-            </mat-form-field>
-            <mat-divider></mat-divider>
-            <br><br>
-            <button mat-raised-button color="accent" routerLink="/issues" skipLocationChange>Back</button>&nbsp;
-            <button type="submit" (click)="updateIssue(title.value, responsible.value, customer.value, description.value, severity.value, status.value)" [disabled]="updateForm.pristine || updateForm.invalid" mat-raised-button color="primary">Save</button>
-          </form>
-        </mat-card>
-      </div>
+  <mat-card>
+    <section class="mat-typography">
+      <h3>Update Issue</h3>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]="updateForm" class="edit-form">
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Issue Title" formControlName="title" #title>
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <mat-select placeholder="Responsible" formControlName="responsible" #responsible>
+          <mat-option *ngFor="let user of users" [value]="user.Name">{{user.Name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <mat-select placeholder="Customer" formControlName="customer" #customer>
+          <mat-option *ngFor="let customer of customers" [value]="customer.Name">{{customer.Name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <textarea matInput placeholder="Description" formControlName="description" #description></textarea>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <textarea matInput placeholder="Notes" formControlName="notes" #notes></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Priority" formControlName="priority" #priority>
+          <mat-option *ngFor="let item of priorities" [value]="item">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-select placeholder="Status" formControlName="status" #status>
+          <mat-option *ngFor="let item of statuses" (click)="changeStatus(item)" [value]="item">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <textarea matInput placeholder="Remedy" formControlName="remedy" disabled="disabled" #remedy></textarea>
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      <br><br>
+      <button mat-raised-button color="accent" routerLink="/issues" skipLocationChange>Back</button>&nbsp;
+      <button type="submit" (click)="updateIssue(title.value, responsible.value, customer.value, description.value, notes.value, remedy.value, priority.value, status.value)" [disabled]="updateForm.pristine || updateForm.invalid" mat-raised-button color="primary">Save</button>
+    </form>
+  </mat-card>
+</div>

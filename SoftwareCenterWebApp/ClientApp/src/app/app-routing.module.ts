@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'customers', component: CustomersComponent },
   { path: 'issues', component: IssuesComponent },
   { path: 'issuedetails/:id', component: IssuedetailsComponent },
-  { path: 'Issues/edit/:id', component: IssuesEditComponent },
+  { path: 'issues/edit/:id', component: IssuesEditComponent },
   { path: 'files', component: FilesComponent },
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
 ];

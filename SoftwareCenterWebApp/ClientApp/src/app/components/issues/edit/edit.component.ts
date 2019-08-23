@@ -4,7 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { IssueService } from '../../../services/issue.service';
 import { CustomerService } from '../../../services/customer.service';
+import { UsersService } from '../../../services/users.service';
+
 import { Issue } from '../../../models/issue.model';
+import { User } from '../../../models/user.model';
 import { Customer } from '../../../models/customer.model';
 
 @Component({
@@ -15,16 +18,19 @@ import { Customer } from '../../../models/customer.model';
 export class IssuesEditComponent implements OnInit {
 
   customers: Customer[];
+  users: User[];
 
   id: string;
   issue: any = {};
   updateForm: FormGroup;
-  severeties = ['Low', 'Medium', 'High'];
-  statuses = ['Open', 'In Progress', 'Closed'];
+  priorities = ['Low', 'Medium', 'High', 'Critical'];
+  statuses = ['Open', 'Validation', 'Closed'];
+  selectedStatus = '';
 
   constructor(
     private issueService: IssueService,
     private customerService: CustomerService,
+    private usersService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
@@ -38,9 +44,19 @@ export class IssuesEditComponent implements OnInit {
       responsible: ['', Validators.required],
       customer: ['', Validators.required],
       description: ['', Validators.required],
-      severity: ['', Validators.required],
+      notes: [''],
+      remedy: [''],
+      priority: ['', Validators.required],
       status: ['', Validators.required]
     });
+  }
+
+  changeStatus(status) {
+    if (status === 'Closed') {
+      this.updateForm.get('remedy').enable();
+    } else {
+      this.updateForm.get('remedy').disable();
+    }
   }
 
   fetchCustomers() {
@@ -53,34 +69,59 @@ export class IssuesEditComponent implements OnInit {
       });
   }
 
+  fetchUsers() {
+    this.usersService
+      .getUsers()
+      .subscribe((data: User[]) => {
+        this.users = data;
+        console.log('Users Data requested...');
+        console.log(this.users);
+      });
+  }
+
+
   ngOnInit() {
+    this.fetchUsers();
     this.fetchCustomers();
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.issueService.getIssueById(this.id).subscribe(res => {
         this.issue = res;
-        this.updateForm.get('title').setValue(this.issue.title);
-        this.updateForm.get('responsible').setValue(this.issue.responsible);
-        this.updateForm.get('customer').setValue(this.issue.customer);
-        this.updateForm.get('description').setValue(this.issue.description);
-        this.updateForm.get('severity').setValue(this.issue.severity);
-        this.updateForm.get('status').setValue(this.issue.status);
+        console.log('Issue to edit: ', this.issue);
+        this.updateForm.get('title').setValue(this.issue.Title);
+        this.updateForm.get('responsible').setValue(this.issue.Responsible);
+        this.updateForm.get('customer').setValue(this.issue.Customer.Name);
+        this.updateForm.get('description').setValue(this.issue.Description);
+        this.updateForm.get('notes').setValue(this.issue.Notes);
+        this.updateForm.get('remedy').setValue(this.issue.Remedy);
+        this.updateForm.get('remedy').disable();
+        this.updateForm.get('priority').setValue(this.issue.Priority);
+        this.updateForm.get('status').setValue(this.issue.Status);
       });
     });
   }
 
-  updateIssue(title, responsible, customer, description, severity, status) {
-    if (!customer) {
-      customer = this.issue.customer;
+  updateIssue(title, responsible, customer, description, notes, remedy, priority, status) {
+    if (!responsible) {
+      responsible = this.issue.Responsible;
     }
-    if (!severity) {
-      severity = this.issue.severity;
+    if (!customer) {
+      customer = this.issue.Customer.Name;
+    }
+    if (!priority) {
+      priority = this.issue.Priority;
     }
     if (!status) {
-      status = this.issue.status;
+      status = this.issue.Status;
     }
-    console.log(customer);
-    this.issueService.updateIssue(this.id, title, responsible, customer, description, severity, status).subscribe(() => {
+
+    const customerId = this.customers.find(c => c.Name === customer);
+    const agreementId = 1;
+    const productId = 1;
+    const createdDate = this.issue.CreatedDate;
+
+
+    this.issueService.updateIssue(this.id, title, responsible, customerId.Id, agreementId, productId, description, notes, remedy, createdDate, priority, status).subscribe(() => {
       this.snackBar.open('Issue updated successfully', 'OK', {
         duration: 3000
       });

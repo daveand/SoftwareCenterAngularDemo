@@ -2,10 +2,8 @@ import { environment } from './../environments/environment';
 import { AdalService } from 'adal-angular4';
 import { Component, ViewChild } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { Event as NavigationEvent } from "@angular/router";
 import { UsersService } from './services/users.service';
 import { User } from './models/user.model';
-import { filter } from "rxjs/operators";
 import { MatSidenav } from '@angular/material/sidenav';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
@@ -17,51 +15,13 @@ import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent {
 
-  routes: any[];
-
   constructor(
     private usersService: UsersService,
     private adalService: AdalService,
     private router: Router) {
-
     this.router = router;
     adalService.init(environment.authConfig);
 
-
-    router.events
-      .pipe(
-        filter(
-          (event: NavigationEvent) => {
-
-            return (event instanceof NavigationStart);
-
-          }
-        )
-      )
-      .subscribe(
-        (event: NavigationStart) => {
-
-          console.group("NavigationStart Event");
-          console.log("navigation id:", event.id);
-          console.log("route:", event.url);
-          console.log("trigger:", event.navigationTrigger);
-
-          // this.routes.push(event.url);
-
-          if (event.restoredState) {
-
-            console.warn(
-              "restoring navigation id:",
-              event.restoredState.navigationId
-            );
-
-          }
-
-          console.groupEnd();
-
-        }
-      )
-      ;
   }
 
   users: User[];
@@ -87,7 +47,7 @@ export class AppComponent {
       console.log(this.adalService.userInfo.profile.groups);
     }
 
-    } 
+  }
 
 
   addUserToDb() {
