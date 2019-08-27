@@ -7,6 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 import { A11yModule } from '@angular/cdk/a11y';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -50,7 +51,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 
-
 import { IssuesEditComponent } from './components/issues/edit/edit.component';
 // import { IssueService } from './issue.service';
 import { IssuesComponent, IssuesCreateDialog } from './components/issues/issues.component';
@@ -60,6 +60,7 @@ import { FilesComponent } from './components/files/files.component';
 import { AuthGuard } from './auth.guard';
 import { LogoutComponent } from './components/logout/logout.component';
 import { CustomersComponent } from './components/customers/customers.component';
+
 
 @NgModule({
   declarations: [
@@ -121,10 +122,15 @@ import { CustomersComponent } from './components/customers/customers.component';
     MatTooltipModule,
     MatTreeModule,
     PortalModule,
-    ScrollingModule
+    ScrollingModule,
+    FormsModule
   ],
   entryComponents: [IssuesComponent, IssuesCreateDialog],
-  providers: [AuthGuard, AdalService, AdalGuard],
+  providers: [
+    AuthGuard,
+    AdalService,
+    AdalGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

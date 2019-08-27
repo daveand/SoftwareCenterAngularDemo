@@ -18,6 +18,7 @@ using MongoDB.Driver;
 using System.Security.Authentication;
 using SoftwareCenterWebApp.Data;
 using Microsoft.EntityFrameworkCore;
+using SoftwareCenterWebApp.Models;
 
 namespace SoftwareCenterWebApp
 {
@@ -29,6 +30,7 @@ namespace SoftwareCenterWebApp
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,6 +41,19 @@ namespace SoftwareCenterWebApp
             services.AddDbContext<AppDbContext>(options =>
               options.UseSqlServer(
                   Configuration.GetConnectionString("AzureDb")));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:44328",
+                                        "https://softwarecenter.azurewebsites.net")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
+            services.Configure<AzureConfigModel>(Configuration.GetSection("AzureStorage"));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -61,12 +76,12 @@ namespace SoftwareCenterWebApp
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
 
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

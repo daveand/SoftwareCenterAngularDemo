@@ -29,6 +29,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="MongoDB.Driver" Version="2.9.0" />
     <PackageReference Include="MongoDB.Entities" Version="7.2.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +41,8 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\auth.guard.ts" />
+    <None Remove="ClientApp\src\app\services\azureStorageStub.ts" />
+    <None Remove="ClientApp\src\assets\azurestorage\azureStorage.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +51,8 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\auth.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\azureStorage.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\azureStorageStub.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

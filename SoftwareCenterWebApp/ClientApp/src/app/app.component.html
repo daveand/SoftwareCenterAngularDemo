@@ -63,8 +63,8 @@
   <mat-sidenav-content>
     <div class="row">
       <div class="col col-12 col-lg-1">
-
         <div class="arrow-box">
+          <!--<mat-icon (click)="sidenav.toggle()">menu</mat-icon>-->
           <fa-icon class="fa-arrow-right" [icon]="faCaretRight" size="2x" (click)="open()" *ngIf="navOpen" style="margin-left: 8px;">Menu</fa-icon>
           <fa-icon class="fa-arrow-left" [icon]="faCaretLeft" size="2x" (click)="close()" *ngIf="!navOpen" style="margin-left: 5px;">Menu</fa-icon>
         </div>
