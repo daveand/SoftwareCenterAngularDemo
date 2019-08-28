@@ -24,10 +24,10 @@ export class IssueService {
     return this.http.get(`${this.url}api/issues/getissuebyid/${id}`);
   }
 
-  addIssue(title, responsible, customerId, description, priority) {
+  addIssue(title, userId, customerId, description, priority) {
     const issue = {
       title,
-      responsible,
+      userId,
       customerId,
       description,
       priority,
@@ -41,11 +41,11 @@ export class IssueService {
       });
   }
 
-  updateIssue(id, title, responsible, customerId, agreementId, productId, description, notes, remedy, createdDate, priority, status) {
+  updateIssue(id, title, userId, customerId, agreementId, productId, description, notes, remedy, createdDate, priority, status) {
     const issue = {
       id,
       title,
-      responsible,
+      userId,
       customerId,
       agreementId,
       productId,

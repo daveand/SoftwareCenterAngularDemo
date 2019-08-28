@@ -13,10 +13,10 @@ namespace SoftwareCenterWebApp.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Responsible { get; set; }
+        public int UserId { get; set; }
         public int CustomerId { get; set; }
-        public int AgreementId { get; set; }
-        public int ProductId { get; set; }
+        public int? AgreementId { get; set; }
+        public int? ProductId { get; set; }
         public string Description { get; set; }
         public string Notes { get; set; }
         public string Remedy { get; set; }
@@ -25,6 +25,7 @@ namespace SoftwareCenterWebApp.Models
         public string Priority { get; set; }
         public string Status { get; set; }
 
+        public UserModel User { get; set; }
         public CustomerModel Customer { get; set; }
         public AgreementModel Agreement { get; set; }
         public ProductModel Product { get; set; }

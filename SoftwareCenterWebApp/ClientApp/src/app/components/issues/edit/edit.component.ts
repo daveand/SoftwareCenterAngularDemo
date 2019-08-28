@@ -89,8 +89,8 @@ export class IssuesEditComponent implements OnInit {
         this.issue = res;
         console.log('Issue to edit: ', this.issue);
         this.updateForm.get('title').setValue(this.issue.Title);
-        this.updateForm.get('responsible').setValue(this.issue.Responsible);
-        this.updateForm.get('customer').setValue(this.issue.Customer.Name);
+        this.updateForm.get('responsible').setValue(this.issue.User.Id);
+        this.updateForm.get('customer').setValue(this.issue.Customer.Id);
         this.updateForm.get('description').setValue(this.issue.Description);
         this.updateForm.get('notes').setValue(this.issue.Notes);
         this.updateForm.get('remedy').setValue(this.issue.Remedy);
@@ -101,12 +101,12 @@ export class IssuesEditComponent implements OnInit {
     });
   }
 
-  updateIssue(title, responsible, customer, description, notes, remedy, priority, status) {
-    if (!responsible) {
-      responsible = this.issue.Responsible;
+  updateIssue(title, userId, customerId, description, notes, remedy, priority, status) {
+    if (!userId) {
+      userId = this.issue.User.Id;
     }
-    if (!customer) {
-      customer = this.issue.Customer.Name;
+    if (!customerId) {
+      customerId = this.issue.Customer.Id;
     }
     if (!priority) {
       priority = this.issue.Priority;
@@ -115,13 +115,12 @@ export class IssuesEditComponent implements OnInit {
       status = this.issue.Status;
     }
 
-    const customerId = this.customers.find(c => c.Name === customer);
     const agreementId = 1;
     const productId = 1;
     const createdDate = this.issue.CreatedDate;
 
 
-    this.issueService.updateIssue(this.id, title, responsible, customerId.Id, agreementId, productId, description, notes, remedy, createdDate, priority, status).subscribe(() => {
+    this.issueService.updateIssue(this.id, title, userId, customerId, agreementId, productId, description, notes, remedy, createdDate, priority, status).subscribe(() => {
       this.snackBar.open('Issue updated successfully', 'OK', {
         duration: 3000
       });

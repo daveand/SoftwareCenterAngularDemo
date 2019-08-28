@@ -12,9 +12,7 @@
         </mat-form-field>
         <mat-form-field class="field-full-width">
           <mat-select placeholder="Responsible" formControlName="responsible" #responsible>
-            <mat-option [value]="this.adalService.userInfo.profile.name">Me: {{this.adalService.userInfo.profile.name}}</mat-option>
-            <mat-divider></mat-divider>
-            <mat-option *ngFor="let user of users" [value]="user.Name">{{user.Name}} ({{user.Email}})</mat-option>
+            <mat-option *ngFor="let user of users" [value]="user.Id">{{user.Name}} ({{user.Email}})</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="field-full-width">
@@ -54,7 +52,7 @@
         </ng-container>
         <ng-container matColumnDef="responsible">
           <th mat-header-cell *matHeaderCellDef>Responsible</th>
-          <td mat-cell *matCellDef="let element"> {{element.Responsible}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.User.Name}} </td>
         </ng-container>
         <ng-container matColumnDef="customer">
           <th mat-header-cell *matHeaderCellDef>Customer</th>

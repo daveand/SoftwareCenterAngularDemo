@@ -36,6 +36,13 @@ export class AppComponent {
     if (this.adalService.userInfo.profile.groups == '06601050-563e-47b4-a0cc-13377f9ddfea') {
       this.role = 'Admin';
     }
+    if (this.adalService.userInfo.profile.groups == '56b8f386-90bc-48e5-a430-52f02fd9a6ce') {
+      this.role = 'SW Technician';
+    }
+    if (this.adalService.userInfo.profile.groups == 'fef123e3-d91f-4d63-88d8-0b07154df185') {
+      this.role = 'Technician';
+    }
+
 
     if (!this.adalService.userInfo.authenticated) {
       this.adalService.login(); //redirects to company AD url

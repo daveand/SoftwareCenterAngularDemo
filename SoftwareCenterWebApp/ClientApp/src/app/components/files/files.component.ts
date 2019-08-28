@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpEventType, HttpParameterCodec} from '@angular/common/http';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { HttpClient, HttpEventType, HttpParameterCodec } from '@angular/common/http';
 import { AdalService } from 'adal-angular4';
 import { Router } from '@angular/router';
 import { from, Observable } from 'rxjs';
@@ -10,12 +12,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from '../../services/customer.service';
 import { UsersService } from '../../services/users.service';
 import { IssueService } from '../../services/issue.service';
+import { FileService } from '../../services/file.service';
 import { Customer } from '../../models/customer.model';
 import { Issue } from '../../models/issue.model';
 import { User } from '../../models/user.model';
+import { Files } from '../../models/files.model';
 import { saveAs } from 'file-saver';
 import { escapeRegExp } from '@angular/compiler/src/util';
-declare var require: any;  
+import { environment } from '../../../environments/environment';
+import { CustomersComponent } from '../../components/customers/customers.component';
+
+declare var require: any;
 
 interface IUploadProgress {
   filename: string;
@@ -32,6 +39,9 @@ export class FilesComponent implements OnInit {
 
   customers: Customer[];
   users: User[];
+  dbFiles: Files[];
+
+  types = environment.fileTypes;
 
   createForm: FormGroup;
 
@@ -47,20 +57,25 @@ export class FilesComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
+    public dialog: MatDialog,
     private adalService: AdalService,
     private customerService: CustomerService,
     private usersService: UsersService,
     private issueService: IssueService,
+    private fileService: FileService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl
     this.createForm = this.fb.group({
       responsible: '',
+      type: '',
       customerId: '',
       files: []
     });
   }
+
+  displayedColumns = ['customer', 'type', 'fileName', 'user', 'uploaded'];
 
   files: string[] = [];
   fileToUpload: FormData;
@@ -95,34 +110,45 @@ export class FilesComponent implements OnInit {
     this.filesToUpload = <Array<File>>fileInput.target.files;
   }
 
-  startUpload(responsible, customer) {
+  startUpload(userId, type, customerId) {
     const files: Array<File> = this.filesToUpload;
-    console.log('files ', files, responsible, customer);
-    this.responsible = responsible;
-    this.customer = customer;
+    console.log('files upload ', files, userId, customerId);
+
+    const user = this.users.find(u => u.Id === userId);
+    const customer = this.customers.find(u => u.Id === customerId);
+
 
     let filesToUpload: File[] = files;
     const formData = new FormData();
 
     Array.from(filesToUpload).map((file, index) => {
-      this.fileName = `${customer}/${file.name}`
+      this.fileName = `${customer.Name}/${type}/${file.name}`
       return formData.append('file' + index, file, this.fileName);
     });
+
     this.onUploadFiles(formData);
-    
+
+    for (var i = 0, len = files.length; i < len; i++) {
+      console.log(files[i].name);
+      const fileName = files[i].name;
+      const filePath = `${customer.Name}/${type}/${files[i].name}`;
+      this.addFile(userId, type, customerId, fileName, filePath);
+    }
+
   }
 
   ngOnInit() {
     this.fetchUsers();
     this.fetchCustomers();
     this.showBlobs(null);
+    this.fetchFiles();
   }
 
   showBlobs(dir) {
     if (dir !== null) {
       dir = dir.split('/').join('^');
       console.log(dir);
-    } 
+    }
     this.http.get<string[]>(this.baseUrl + `api/blob/listfiles/${dir}`).subscribe(result => {
       console.log('result: ', result);
       result.forEach(item => {
@@ -157,12 +183,6 @@ export class FilesComponent implements OnInit {
     this.filesList = [];
   }
 
-  addFile() {
-    if (!this.fileUpoadInitiated) {
-      document.getElementById('fileUpload').click();
-    }
-  }
-
   onUploadFiles(formData) {
     this.progress = 0;
     this.message = '';
@@ -174,6 +194,7 @@ export class FilesComponent implements OnInit {
           this.message = 'Upload success.';
           this.onUploadFinished.emit(event.body);
           this.showBlobs(null);
+          this.fetchFiles();
         }
       });
 
@@ -207,12 +228,46 @@ export class FilesComponent implements OnInit {
 
     var del = confirm('Are you sure want to delete ' + fileName + '?');
     if (!del) return;
-    this.http.get(this.baseUrl + 'api/blob/deletefile/' + filePath).subscribe(result => {
+    this.fileService.deleteFile(filePath).subscribe(result => {
       if (result != null) {
+        this.http.get(this.baseUrl + 'api/blob/deletefile/' + filePath).subscribe(result => {
+          console.log(result);
+        });
         this.showBlobs(null);
+        this.fetchFiles();
       }
     }, error => console.error(error));
-  }  
+  }
+
+  fetchFiles() {
+    this.fileService
+      .getFiles()
+      .subscribe((data: Files[]) => {
+        this.dbFiles = data;
+        console.log('Data requested...');
+        console.log(this.dbFiles);
+      });
+  }
+
+  addFile(userId, type, customerId, fileName, filePath) {
+    this.fileService.addFile(userId, type, customerId, fileName, filePath).subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CustomersComponent, {
+      //width: '250px',
+      //data: { name: this.name, animal: this.animal }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.ngOnInit();
+      //this.animal = result;
+    });
+  }
+
 
 
 }

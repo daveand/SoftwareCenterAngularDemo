@@ -12,13 +12,13 @@
 
       <mat-form-field class="field-full-width">
         <mat-select placeholder="Responsible" formControlName="responsible" #responsible>
-          <mat-option *ngFor="let user of users" [value]="user.Name">{{user.Name}}</mat-option>
+          <mat-option *ngFor="let user of users" [value]="user.Id">{{user.Name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field class="field-full-width">
         <mat-select placeholder="Customer" formControlName="customer" #customer>
-          <mat-option *ngFor="let customer of customers" [value]="customer.Name">{{customer.Name}}</mat-option>
+          <mat-option *ngFor="let customer of customers" [value]="customer.Id">{{customer.Name}}</mat-option>
         </mat-select>
       </mat-form-field>
 

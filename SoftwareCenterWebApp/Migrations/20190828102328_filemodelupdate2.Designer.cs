@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareCenterWebApp.Data;
 
 namespace SoftwareCenterWebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190828102328_filemodelupdate2")]
+    partial class filemodelupdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,7 +117,7 @@ namespace SoftwareCenterWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AgreementId");
+                    b.Property<int>("AgreementId");
 
                     b.Property<int>("CustomerId");
 
@@ -123,11 +125,11 @@ namespace SoftwareCenterWebApp.Migrations
 
                     b.Property<string>("FilePath");
 
-                    b.Property<int?>("IssueId");
+                    b.Property<int>("IssueId");
 
-                    b.Property<int?>("KnowledgeId");
+                    b.Property<int>("KnowledgeId");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.Property<string>("Type");
 
@@ -158,7 +160,7 @@ namespace SoftwareCenterWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AgreementId");
+                    b.Property<int>("AgreementId");
 
                     b.Property<DateTime>("CloseDate");
 
@@ -172,15 +174,15 @@ namespace SoftwareCenterWebApp.Migrations
 
                     b.Property<string>("Priority");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<int>("ProductId");
 
                     b.Property<string>("Remedy");
+
+                    b.Property<string>("Responsible");
 
                     b.Property<string>("Status");
 
                     b.Property<string>("Title");
-
-                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -189,8 +191,6 @@ namespace SoftwareCenterWebApp.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Issues");
                 });
@@ -315,7 +315,8 @@ namespace SoftwareCenterWebApp.Migrations
                 {
                     b.HasOne("SoftwareCenterWebApp.Models.AgreementModel", "Agreement")
                         .WithMany()
-                        .HasForeignKey("AgreementId");
+                        .HasForeignKey("AgreementId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SoftwareCenterWebApp.Models.CustomerModel", "Customer")
                         .WithMany()
@@ -324,15 +325,18 @@ namespace SoftwareCenterWebApp.Migrations
 
                     b.HasOne("SoftwareCenterWebApp.Models.IssueModel", "Issue")
                         .WithMany()
-                        .HasForeignKey("IssueId");
+                        .HasForeignKey("IssueId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SoftwareCenterWebApp.Models.KnowledgeModel", "Knowledge")
                         .WithMany()
-                        .HasForeignKey("KnowledgeId");
+                        .HasForeignKey("KnowledgeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SoftwareCenterWebApp.Models.ProductModel", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SoftwareCenterWebApp.Models.UserModel", "User")
                         .WithMany()
@@ -344,7 +348,8 @@ namespace SoftwareCenterWebApp.Migrations
                 {
                     b.HasOne("SoftwareCenterWebApp.Models.AgreementModel", "Agreement")
                         .WithMany()
-                        .HasForeignKey("AgreementId");
+                        .HasForeignKey("AgreementId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SoftwareCenterWebApp.Models.CustomerModel", "Customer")
                         .WithMany()
@@ -353,11 +358,7 @@ namespace SoftwareCenterWebApp.Migrations
 
                     b.HasOne("SoftwareCenterWebApp.Models.ProductModel", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("SoftwareCenterWebApp.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

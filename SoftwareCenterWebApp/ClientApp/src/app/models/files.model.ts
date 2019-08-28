@@ -1,6 +1,17 @@
+import { Customer } from './customer.model';
+
+
 export interface Files {
-    type: string;
-    name: string;
-    path: string;
+  Id: string;
+  CustomerId: string;
+  AgreementId: string;
+  ProductId: string;
+  IssueId: string;
+  KnowledgeId: string;
+  UserId: string;
+  Uploaded: string;
+
+  Customer: Customer;
+
 
 }

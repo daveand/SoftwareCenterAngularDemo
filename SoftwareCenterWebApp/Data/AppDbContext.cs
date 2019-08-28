@@ -23,6 +23,7 @@ namespace SoftwareCenterWebApp.Data
         public DbSet<ProjectModel> Projects { get; set; }
         public DbSet<AgreementModel> Agreements { get; set; }
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<FileModel> Files { get; set; }
 
 
 

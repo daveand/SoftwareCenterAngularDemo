@@ -74,7 +74,9 @@ export class IssuesComponent implements OnInit {
   }
 
   addIssue(title, responsible, customerId, description, priority) {
-    this.issueService.addIssue(title, responsible, customerId, description, priority).subscribe(() => {
+    const user = this.users.find(u => u.Id === responsible);
+
+    this.issueService.addIssue(title, user.Id, customerId, description, priority).subscribe(() => {
       // this.router.navigate(['/issues']);
       this.snackBar.open('New issue added!', 'Close');
       this.ngOnInit();
