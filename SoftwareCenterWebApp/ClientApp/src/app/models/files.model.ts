@@ -1,4 +1,5 @@
 import { Customer } from './customer.model';
+import { User } from './user.model';
 
 
 export interface Files {
@@ -12,6 +13,6 @@ export interface Files {
   Uploaded: string;
 
   Customer: Customer;
-
+  User: User;
 
 }

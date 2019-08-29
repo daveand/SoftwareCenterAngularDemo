@@ -8,10 +8,14 @@ import { IssuesComponent } from './components/issues/issues.component';
 import { IssuedetailsComponent } from './components/issues/details/details.component';
 import { FilesComponent } from './components/files/files.component';
 import { CustomersComponent } from './components/customers/customers.component';
+import { SearchComponent } from './components/search/search.component';
+import { ProductsComponent } from './components/products/products.component';
 
 
 const routes: Routes = [
+  { path: 'search', component: SearchComponent },
   { path: 'customers', component: CustomersComponent },
+  { path: 'products', component: ProductsComponent },
   { path: 'issues', component: IssuesComponent },
   { path: 'issuedetails/:id', component: IssuedetailsComponent },
   { path: 'issues/edit/:id', component: IssuesEditComponent },

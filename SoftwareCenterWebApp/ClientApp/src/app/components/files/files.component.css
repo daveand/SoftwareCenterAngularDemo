@@ -9,13 +9,15 @@
 
 table {
   width: 100%;
-  font-size: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
 }
 
-.mat-column-right {
-  text-align: center;
+th.mat-header-cell {
+  text-align: left;
+  max-width: 300px;
 }
-
 
 .blobstorage-section {
   font-family: Calibri;
@@ -83,4 +85,16 @@ table {
   color: #28a745;
   margin-left: 15px;
   line-height: 36px;
+}
+
+.mat-paginator.paginator--centered {
+  display: flex;
+  justify-content: center;
+}
+
+.parent {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  flex-direction: column;
 }

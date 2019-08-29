@@ -8,7 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-
 import { A11yModule } from '@angular/cdk/a11y';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { PortalModule } from '@angular/cdk/portal';
@@ -60,6 +59,9 @@ import { FilesComponent } from './components/files/files.component';
 import { AuthGuard } from './auth.guard';
 import { LogoutComponent } from './components/logout/logout.component';
 import { CustomersComponent } from './components/customers/customers.component';
+import { ProductsComponent } from './components/products/products.component';
+
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
@@ -72,7 +74,9 @@ import { CustomersComponent } from './components/customers/customers.component';
     HomeComponent,
     FilesComponent,
     LogoutComponent,
-    CustomersComponent
+    CustomersComponent,
+    ProductsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

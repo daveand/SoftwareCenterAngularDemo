@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, OnInit, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { HttpClient, HttpEventType, HttpParameterCodec } from '@angular/common/http';
 import { AdalService } from 'adal-angular4';
 import { Router } from '@angular/router';
-import { from, Observable } from 'rxjs';
-import { combineAll, map } from 'rxjs/operators';
+import { from, Observable, BehaviorSubject } from 'rxjs';
+import { combineAll, map, tap, last } from 'rxjs/operators';
 import { ISasToken } from '../../services/azureStorage';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,7 +34,7 @@ interface IUploadProgress {
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.css']
 })
-export class FilesComponent implements OnInit {
+export class FilesComponent implements OnInit, AfterViewInit {
   baseUrl;
 
   customers: Customer[];
@@ -50,6 +50,7 @@ export class FilesComponent implements OnInit {
   filesToUpload: Array<File> = [];
   responsible = '';
   customer = '';
+  fileUploadProgress: string = null;
   public progress: number;
   public message: string;
   public fileName: string;
@@ -65,6 +66,7 @@ export class FilesComponent implements OnInit {
     private fileService: FileService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
+
     @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl
     this.createForm = this.fb.group({
@@ -75,7 +77,8 @@ export class FilesComponent implements OnInit {
     });
   }
 
-  displayedColumns = ['customer', 'type', 'fileName', 'user', 'uploaded'];
+  displayedColumns = ['Customer.Name', 'Type', 'FileName', 'User.Name', 'Uploaded', 'Actions'];
+  public dataSource = new MatTableDataSource<Files>();
 
   files: string[] = [];
   fileToUpload: FormData;
@@ -85,6 +88,7 @@ export class FilesComponent implements OnInit {
   dirList: Array<{ name: string, path: string }> = [];
   filesList: Array<{ name: string, path: string, length: string }> = [];
   currentDir: string;
+
 
   fetchCustomers() {
     this.customerService
@@ -137,13 +141,6 @@ export class FilesComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.fetchUsers();
-    this.fetchCustomers();
-    this.showBlobs(null);
-    this.fetchFiles();
-  }
-
   showBlobs(dir) {
     if (dir !== null) {
       dir = dir.split('/').join('^');
@@ -186,13 +183,18 @@ export class FilesComponent implements OnInit {
   onUploadFiles(formData) {
     this.progress = 0;
     this.message = '';
+
+    this.fileUploadProgress = '0%';
+
     return this.http.post(this.baseUrl + 'api/blob/insertfile', formData, { reportProgress: true, observe: 'events' })
-      .subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.progress = Math.round(100 * event.loaded / event.total);
-        else if (event.type === HttpEventType.Response) {
+      .subscribe(events => {
+        if (events.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(events.loaded / events.total * 100);
+          console.log(this.fileUploadProgress);
+        }
+        else if (events.type === HttpEventType.Response) {
           this.message = 'Upload success.';
-          this.onUploadFinished.emit(event.body);
+          this.onUploadFinished.emit(events.body);
           this.showBlobs(null);
           this.fetchFiles();
         }
@@ -217,7 +219,8 @@ export class FilesComponent implements OnInit {
           alert('File not found in Blob!');
         }
       }
-      );
+    );
+
   }
 
   deleteFile(filePath: string, fileName: string) {
@@ -243,9 +246,10 @@ export class FilesComponent implements OnInit {
     this.fileService
       .getFiles()
       .subscribe((data: Files[]) => {
-        this.dbFiles = data;
+        this.dataSource.data = data as Files[];
+        //this.dbFiles = data;
         console.log('Data requested...');
-        console.log(this.dbFiles);
+        console.log(this.dataSource.data);
       });
   }
 
@@ -266,6 +270,32 @@ export class FilesComponent implements OnInit {
       this.ngOnInit();
       //this.animal = result;
     });
+  }
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  ngOnInit() {
+    this.fetchUsers();
+    this.fetchCustomers();
+    this.showBlobs(null);
+    this.fetchFiles();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'Customer.Name': return item.Customer.Name;
+        case 'User.Name': return item.User.Name;
+        default: return item[property];
+      }
+    };
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 
