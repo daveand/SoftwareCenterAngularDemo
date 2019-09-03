@@ -17,11 +17,17 @@ export class FileService {
     return this.http.get(this.url + 'api/files/getfiles');
   }
 
-  addFile(userId, type, customerId, fileName, filePath) {
+  getFilesByIssue(id) {
+    return this.http.get(`${this.url}api/files/getfilesbyissue/${id}`);
+  }
+
+
+  addFile(userId, type, customerId, productId, fileName, filePath) {
     const file = {
       userId,
       type,
       customerId,
+      productId,
       fileName,
       filePath
     };
@@ -33,6 +39,26 @@ export class FileService {
       })
     });
   }
+
+  addIssueFile(userId, type, customerId, productId, fileName, filePath, issueId) {
+    const file = {
+      userId,
+      type,
+      customerId,
+      productId,
+      fileName,
+      filePath,
+      issueId
+    };
+    console.log('FileService ', file);
+
+    return this.http.post(`${this.url}api/files/createfile`, file, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    });
+  }
+
 
   deleteFile(id) {
     console.log('fileService ', id);

@@ -21,6 +21,10 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
           <td mat-cell *matCellDef="let element"> {{element.Type}} </td>
         </ng-container>
+        <ng-container matColumnDef="Product.Title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+          <td mat-cell *matCellDef="let element"> {{element.Product.Title}} </td>
+        </ng-container>
         <ng-container matColumnDef="FileName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Filename</th>
           <td mat-cell *matCellDef="let element"> {{element.FileName}} </td>
@@ -31,7 +35,7 @@
         </ng-container>
         <ng-container matColumnDef="Uploaded">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded</th>
-          <td mat-cell *matCellDef="let element"> {{element.Uploaded | date: 'yyyy-MM-dd - HH:MM'}}</td>
+          <td mat-cell *matCellDef="let element"> {{element.Uploaded | date: 'yyyy-MM-dd - HH:mm'}}</td>
         </ng-container>
         <ng-container matColumnDef="Actions">
           <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
@@ -78,14 +82,20 @@
         </mat-form-field>
         <mat-form-field class="field-full-width">
           <mat-select placeholder="Customer" formControlName="customerId" #customerId>
-            <mat-option (click)="openDialog()">New Customer...</mat-option>
+            <mat-option (click)="openCustomerDialog()">New Customer...</mat-option>
             <mat-option *ngFor="let customer of customers" [value]="customer.Id">{{customer.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Product" formControlName="productId" #productId>
+            <mat-option (click)="openProductDialog()">New Product...</mat-option>
+            <mat-option *ngFor="let product of products" [value]="product.Id">{{product.Title}}</mat-option>
           </mat-select>
         </mat-form-field>
         <input type="file" name="filesToUpload" multiple="multiple" formControlName="files" #files (change)="fileChangeEvent($event)">
         <br>
         <br>
-        <button type="submit" (click)="startUpload(responsible.value, type.value, customerId.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Upload</button>
+        <button type="submit" (click)="startUpload(responsible.value, type.value, customerId.value, productId.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Upload</button>
       </form>
       <div class="parent">
         <span class="" *ngIf="progress > 0">
@@ -155,8 +165,10 @@
         </tbody>
       </table>
     </mat-card>
-    
+
 
   </div>
 </div>
-<br /><br /><br />
+<br />
+<br />
+<br />

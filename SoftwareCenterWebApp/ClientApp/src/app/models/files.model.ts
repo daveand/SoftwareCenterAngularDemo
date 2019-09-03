@@ -1,5 +1,6 @@
 import { Customer } from './customer.model';
 import { User } from './user.model';
+import { Product } from './product.model';
 
 
 export interface Files {
@@ -14,5 +15,6 @@ export interface Files {
 
   Customer: Customer;
   User: User;
+  Product: Product;
 
 }

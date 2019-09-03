@@ -26,11 +26,26 @@ namespace SoftwareCenterWebApp.Controllers
         [HttpGet("[action]")]
         public String GetFiles()
         {
-            var files = _context.Files.Include(m => m.Customer).Include(m => m.User).ToList();
+            var files = _context.Files.Include(m => m.Customer).Include(m => m.User).Include(m => m.Product).ToList();
 
 
             return JsonConvert.SerializeObject(files);
         }
+
+        [HttpGet("[action]/{id:int}")]
+        public String GetFilesByIssue(int id)
+        {
+            var files = _context.Files
+                .Include(m => m.Customer)
+                .Include(m => m.User)
+                .Include(m => m.Product)
+                .Where(m => m.IssueId == id)
+                .ToList();
+
+
+            return JsonConvert.SerializeObject(files);
+        }
+
 
         [HttpPost("[action]")]
         public async Task<JsonResult> SearchFiles([FromQuery] SearchModel searchString)

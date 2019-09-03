@@ -15,3 +15,15 @@ table {
 .mat-column-right {
   text-align: center;
 }
+
+.parent {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.mat-paginator.paginator--centered {
+  display: flex;
+  justify-content: center;
+}

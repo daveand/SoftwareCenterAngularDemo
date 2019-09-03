@@ -13,14 +13,17 @@ import { CustomerService } from '../../services/customer.service';
 import { UsersService } from '../../services/users.service';
 import { IssueService } from '../../services/issue.service';
 import { FileService } from '../../services/file.service';
+import { ProductService } from '../../services/product.service';
 import { Customer } from '../../models/customer.model';
 import { Issue } from '../../models/issue.model';
 import { User } from '../../models/user.model';
 import { Files } from '../../models/files.model';
+import { Product } from '../../models/product.model';
 import { saveAs } from 'file-saver';
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { environment } from '../../../environments/environment';
 import { CustomersComponent } from '../../components/customers/customers.component';
+import { ProductsComponent } from '../../components/products/products.component';
 
 declare var require: any;
 
@@ -39,6 +42,8 @@ export class FilesComponent implements OnInit, AfterViewInit {
 
   customers: Customer[];
   users: User[];
+  products: Product[];
+
   dbFiles: Files[];
 
   types = environment.fileTypes;
@@ -64,6 +69,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
     private usersService: UsersService,
     private issueService: IssueService,
     private fileService: FileService,
+    private productService: ProductService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
 
@@ -73,11 +79,12 @@ export class FilesComponent implements OnInit, AfterViewInit {
       responsible: '',
       type: '',
       customerId: '',
+      productId: '',
       files: []
     });
   }
 
-  displayedColumns = ['Customer.Name', 'Type', 'FileName', 'User.Name', 'Uploaded', 'Actions'];
+  displayedColumns = ['Customer.Name', 'Type', 'Product.Title', 'FileName', 'User.Name', 'Uploaded', 'Actions'];
   public dataSource = new MatTableDataSource<Files>();
 
   files: string[] = [];
@@ -110,11 +117,21 @@ export class FilesComponent implements OnInit, AfterViewInit {
       });
   }
 
+  fetchProducts() {
+    this.productService
+      .getProducts()
+      .subscribe((data: Product[]) => {
+        this.products = data;
+        console.log('Products Data requested...');
+        console.log(this.products);
+      });
+  }
+
   fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>>fileInput.target.files;
   }
 
-  startUpload(userId, type, customerId) {
+  startUpload(userId, type, customerId, productId) {
     const files: Array<File> = this.filesToUpload;
     console.log('files upload ', files, userId, customerId);
 
@@ -136,7 +153,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
       console.log(files[i].name);
       const fileName = files[i].name;
       const filePath = `${customer.Name}/${type}/${files[i].name}`;
-      this.addFile(userId, type, customerId, fileName, filePath);
+      this.addFile(userId, type, customerId, productId, fileName, filePath);
     }
 
   }
@@ -253,14 +270,27 @@ export class FilesComponent implements OnInit, AfterViewInit {
       });
   }
 
-  addFile(userId, type, customerId, fileName, filePath) {
-    this.fileService.addFile(userId, type, customerId, fileName, filePath).subscribe(() => {
+  addFile(userId, type, customerId, productId, fileName, filePath) {
+    this.fileService.addFile(userId, type, customerId, productId, fileName, filePath).subscribe(() => {
       this.ngOnInit();
     });
   }
 
-  openDialog(): void {
+  openCustomerDialog(): void {
     const dialogRef = this.dialog.open(CustomersComponent, {
+      //width: '250px',
+      //data: { name: this.name, animal: this.animal }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.ngOnInit();
+      //this.animal = result;
+    });
+  }
+
+  openProductDialog(): void {
+    const dialogRef = this.dialog.open(ProductsComponent, {
       //width: '250px',
       //data: { name: this.name, animal: this.animal }
     });
@@ -280,6 +310,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
     this.fetchCustomers();
     this.showBlobs(null);
     this.fetchFiles();
+    this.fetchProducts();
   }
 
   ngAfterViewInit(): void {
@@ -287,8 +318,13 @@ export class FilesComponent implements OnInit, AfterViewInit {
       switch (property) {
         case 'Customer.Name': return item.Customer.Name;
         case 'User.Name': return item.User.Name;
+        case 'Product.Title': return item.Product.Title;
         default: return item[property];
       }
+    };
+    this.dataSource.filterPredicate = (data: any, filter) => {
+      const dataStr = JSON.stringify(data).toLowerCase();
+      return dataStr.indexOf(filter) != -1;
     };
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

@@ -11,14 +11,20 @@
           <input matInput placeholder="Issue Title" formControlName="title" #title>
         </mat-form-field>
         <mat-form-field class="field-full-width">
-          <mat-select placeholder="Responsible" formControlName="responsible" #responsible>
+          <mat-select placeholder="User" formControlName="userId" #userId>
             <mat-option *ngFor="let user of users" [value]="user.Id">{{user.Name}} ({{user.Email}})</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="field-full-width">
           <mat-select placeholder="Customer" formControlName="customerId" #customerId>
-            <mat-option (click)="openDialog()">New Customer...</mat-option>
+            <mat-option (click)="openCustomerDialog()">New Customer...</mat-option>
             <mat-option *ngFor="let customer of customers" [value]="customer.Id">{{customer.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Product" formControlName="productId" #productId>
+            <mat-option (click)="openProductDialog()">New Product...</mat-option>
+            <mat-option *ngFor="let product of products" [value]="product.Id">{{product.Title}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="field-full-width">
@@ -33,7 +39,7 @@
         <mat-divider></mat-divider>
         <br>
         <br>
-        <button type="submit" (click)="addIssue(title.value, responsible.value, customerId.value, description.value, priority.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Create</button>
+        <button type="submit" (click)="addIssue(title.value, userId.value, customerId.value, productId.value, description.value, priority.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Create</button>
       </form>
     </mat-card>
 
@@ -44,29 +50,39 @@
         <h3>Issues</h3>
       </section>
       <mat-divider></mat-divider>
-      <br>
-      <table mat-table [dataSource]="issues">
-        <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef>Title</th>
+      <div class="parent">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        </mat-form-field>
+
+      </div>
+
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
           <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
         </ng-container>
-        <ng-container matColumnDef="responsible">
-          <th mat-header-cell *matHeaderCellDef>Responsible</th>
+        <ng-container matColumnDef="User.Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Responsible</th>
           <td mat-cell *matCellDef="let element"> {{element.User.Name}} </td>
         </ng-container>
-        <ng-container matColumnDef="customer">
-          <th mat-header-cell *matHeaderCellDef>Customer</th>
+        <ng-container matColumnDef="Customer.Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer</th>
           <td mat-cell *matCellDef="let element"> {{element.Customer.Name}} </td>
         </ng-container>
-        <ng-container matColumnDef="priority">
-          <th mat-header-cell *matHeaderCellDef>Priority</th>
+        <ng-container matColumnDef="Product.Title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+          <td mat-cell *matCellDef="let element"> {{element.Product.Title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Priority">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
           <td mat-cell *matCellDef="let element"> {{element.Priority}} </td>
         </ng-container>
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef>Status</th>
+        <ng-container matColumnDef="Status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
         </ng-container>
-        <ng-container matColumnDef="actions">
+        <ng-container matColumnDef="Actions">
           <th mat-header-cell *matHeaderCellDef class="mat-column-right">Actions</th>
           <td mat-cell *matCellDef="let element" class="mat-column-right">
             <button mat-button color="primary" (click)="detailsIssue(element.Id)">Details</button>
@@ -77,6 +93,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      <mat-paginator class="paginator--centered" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
     </mat-card>
 
   </div>   

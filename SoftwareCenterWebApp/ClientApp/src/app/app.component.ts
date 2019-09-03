@@ -1,6 +1,6 @@
 import { environment } from './../environments/environment';
 import { AdalService } from 'adal-angular4';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, HostListener } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { UsersService } from './services/users.service';
 import { User } from './models/user.model';
@@ -27,6 +27,18 @@ export class AppComponent {
   users: User[];
 
   role: string;
+
+  mobile: boolean;
+
+  @HostListener("window:resize", [])
+  onResize() {
+    var width = window.innerWidth;
+    if (width < 992) {
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
+  }
 
   ngOnInit() {
     // Handle callback if this is a redirect from Azure

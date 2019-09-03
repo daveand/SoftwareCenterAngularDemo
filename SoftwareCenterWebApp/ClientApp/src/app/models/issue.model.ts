@@ -1,4 +1,6 @@
 import { Customer } from './customer.model';
+import { User } from './user.model';
+import { Product } from './product.model';
 
 
 export interface Issue {
@@ -14,4 +16,6 @@ export interface Issue {
   Priority: string;
   Status: string;
   Customer: Customer;
+  User: User;
+  Product: Product;
 }

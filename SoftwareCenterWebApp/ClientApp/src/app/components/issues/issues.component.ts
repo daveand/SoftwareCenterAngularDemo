@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { AdalService } from 'adal-angular4';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { CustomerService } from '../../services/customer.service';
 import { UsersService } from '../../services/users.service';
 import { IssueService } from '../../services/issue.service';
@@ -11,7 +11,10 @@ import { Router } from '@angular/router';
 import { Customer } from '../../models/customer.model';
 import { Issue } from '../../models/issue.model';
 import { User } from '../../models/user.model';
+import { Product } from '../../models/product.model';
 import { CustomersComponent } from '../../components/customers/customers.component';
+import { ProductsComponent } from '../../components/products/products.component';
+import { ProductService } from '../../services/product.service';
 
 
 export interface DialogData {
@@ -24,11 +27,14 @@ export interface DialogData {
   templateUrl: './issues.component.html',
   styleUrls: ['./issues.component.css']
 })
-export class IssuesComponent implements OnInit {
+export class IssuesComponent implements OnInit, AfterViewInit {
   issues: Issue[];
-  displayedColumns = ['title', 'responsible', 'customer', 'priority', 'status', 'actions'];
+  displayedColumns = ['Title', 'User.Name', 'Customer.Name', 'Product.Title', 'Priority', 'Status', 'Actions'];
+  public dataSource = new MatTableDataSource<Issue>();
 
   customers: Customer[];
+  products: Product[];
+
   users: User[];
   priorities = ['Low', 'Medium', 'High', 'Critical'];
 
@@ -42,12 +48,14 @@ export class IssuesComponent implements OnInit {
     private customerService: CustomerService,
     private usersService: UsersService,
     private issueService: IssueService,
+    private productService: ProductService,
     private fb: FormBuilder,
     private router: Router) {
     this.createForm = this.fb.group({
       title: ['', Validators.required],
-      responsible: '',
+      userId: '',
       customerId: '',
+      productId: '',
       description: '',
       priority: '',
     });
@@ -73,10 +81,21 @@ export class IssuesComponent implements OnInit {
       });
   }
 
-  addIssue(title, responsible, customerId, description, priority) {
-    const user = this.users.find(u => u.Id === responsible);
+  fetchProducts() {
+    this.productService
+      .getProducts()
+      .subscribe((data: Product[]) => {
+        this.products = data;
+        console.log('Products Data requested...');
+        console.log(this.products);
+      });
+  }
 
-    this.issueService.addIssue(title, user.Id, customerId, description, priority).subscribe(() => {
+
+  addIssue(title, userId, customerId, productId, description, priority) {
+    const user = this.users.find(u => u.Id === userId);
+
+    this.issueService.addIssue(title, user.Id, customerId, productId, description, priority).subscribe(() => {
       // this.router.navigate(['/issues']);
       this.snackBar.open('New issue added!', 'Close');
       this.ngOnInit();
@@ -87,7 +106,7 @@ export class IssuesComponent implements OnInit {
     this.issueService
       .getIssues()
       .subscribe((data: Issue[]) => {
-        this.issues = data;
+        this.dataSource.data = data as Issue[];
         console.log('Data requested...');
         console.log(this.issues);
       });
@@ -109,7 +128,7 @@ export class IssuesComponent implements OnInit {
       });
   }
 
-  openDialog(): void {
+  openCustomerDialog(): void {
     const dialogRef = this.dialog.open(CustomersComponent, {
       //width: '250px',
       //data: { name: this.name, animal: this.animal }
@@ -122,11 +141,49 @@ export class IssuesComponent implements OnInit {
     });
   }
 
+  openProductDialog(): void {
+    const dialogRef = this.dialog.open(ProductsComponent, {
+      //width: '250px',
+      //data: { name: this.name, animal: this.animal }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.ngOnInit();
+      //this.animal = result;
+    });
+  }
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit() {
     this.fetchUsers();
     this.fetchCustomers();
     this.fetchIssues();
+    this.fetchProducts();
 
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'Customer.Name': return item.Customer.Name;
+        case 'User.Name': return item.User.Name;
+        case 'Product.Title': return item.Product.Title;
+        default: return item[property];
+      }
+    };
+    this.dataSource.filterPredicate = (data: any, filter) => {
+      const dataStr = JSON.stringify(data).toLowerCase();
+      return dataStr.indexOf(filter) != -1;
+    };
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

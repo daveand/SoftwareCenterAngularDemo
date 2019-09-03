@@ -9,54 +9,128 @@
   <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon" (click)="logOut()">logout_user</mat-icon>
 
 </mat-toolbar>-->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <!--<button mat-icon-button>
-      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-    </button>-->
-    <a class="navbar-brand" href="#">Service Management</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  <!--<button mat-icon-button>
+    <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+  </button>-->
+  <a class="navbar-brand" href="#">
+    <img src="img/1280px-Atlas_Copco_logo.svg.png" height="30" />
+    Service Management
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item ">
-          <a class="nav-link active" href="#">
-            <mat-icon class="" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
-            
-          </a>
-
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link active" href="#"><mat-icon class="" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link active" href="#">{{this.adalService.userInfo.userName}} - {{role}}</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link active" href="#"><mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon" (click)="logOut()">logout_user</mat-icon></a>
+      </li>
+    </ul>
+    <ul class="nav flex-column" *ngIf="mobile">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">home</mat-icon>Dashboard </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/files'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">insert_drive_file</mat-icon>Files </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">help</mat-icon>Knowledge DB </a>
+      </li>
+      <div *ngIf="role === 'Admin' || role === 'SWTech'">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/issues'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">report_problem</mat-icon>Issues </a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link active" href="#">
-            {{this.adalService.userInfo.userName}} - {{role}}
-          </a>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">check_circle</mat-icon>Actions </a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link active" href="#">
-            <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon" (click)="logOut()">logout_user</mat-icon>
-          </a>
-
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">build</mat-icon>Projects </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/customers'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">assignment_ind</mat-icon>Customers </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/products'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">dns</mat-icon>Products </a>
         </li>
 
 
+      </div>
+    </ul>
 
-      </ul>
 
-    </div>
-  </nav>
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" opened="true" disableClose="true">
+
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">home</mat-icon>Dashboard </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/files'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">insert_drive_file</mat-icon>Files </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">help</mat-icon>Knowledge DB </a>
+          </li>
+          <div *ngIf="role === 'Admin' || role === 'SWTech'">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="'/issues'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">report_problem</mat-icon>Issues </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">check_circle</mat-icon>Actions </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">build</mat-icon>Projects </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="'/customers'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">assignment_ind</mat-icon>Customers </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="'/products'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">dns</mat-icon>Products </a>
+            </li>
+
+
+          </div>
+        </ul>
+      </div>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div style="height: 95vh; margin-top: 30px;">
+        <router-outlet></router-outlet>
+      </div>
+
+
+      <!--<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+      </div>-->
+
+    </main>
+  </div>
+</div>
+<!--<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened="true" disableClose="false" *ngIf="!mobile">
 
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">home</mat-icon>Dashboard </a>
       <a mat-list-item [routerLink]="'/files'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">insert_drive_file</mat-icon>Files </a>
       <a mat-list-item [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">help</mat-icon>Knowledge DB </a>
-      <a mat-list-item [routerLink]="'/issues'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">report_problem</mat-icon>Issues </a>
-      <a mat-list-item [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">check_circle</mat-icon>Actions </a>
-      <a mat-list-item [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">build</mat-icon>Projects </a>
-      <a mat-list-item [routerLink]="'/customers'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">assignment_ind</mat-icon>Customers </a>
-      <a mat-list-item [routerLink]="'/products'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">dns</mat-icon>Products </a>
+      <div *ngIf="role === 'Admin' || role === 'SWTech'">
+        <a mat-list-item [routerLink]="'/issues'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">report_problem</mat-icon>Issues </a>
+        <a mat-list-item [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">check_circle</mat-icon>Actions </a>
+        <a mat-list-item [routerLink]="'/'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">build</mat-icon>Projects </a>
+        <a mat-list-item [routerLink]="'/customers'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">assignment_ind</mat-icon>Customers </a>
+        <a mat-list-item [routerLink]="'/products'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">dns</mat-icon>Products </a>
+      </div>
 
     </mat-nav-list>
   </mat-sidenav>
@@ -64,7 +138,7 @@
     <div class="row">
       <div class="col col-12 col-lg-1">
         <div class="arrow-box">
-          <!--<mat-icon (click)="sidenav.toggle()">menu</mat-icon>-->
+          <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
           <fa-icon class="fa-arrow-right" [icon]="faCaretRight" size="2x" (click)="open()" *ngIf="navOpen" style="margin-left: 8px;">Menu</fa-icon>
           <fa-icon class="fa-arrow-left" [icon]="faCaretLeft" size="2x" (click)="close()" *ngIf="!navOpen" style="margin-left: 5px;">Menu</fa-icon>
         </div>
@@ -72,11 +146,8 @@
       </div>
 
     </div>
-    <!-- <mat-card class="mat-card-top">Test</mat-card> -->
-    <div style="height: 88vh; margin-left: 30px; margin-right: 30px; margin-top: -20px;">
-      <router-outlet></router-outlet>
-    </div>
+     <mat-card class="mat-card-top">Test</mat-card> 
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container>-->
 
 

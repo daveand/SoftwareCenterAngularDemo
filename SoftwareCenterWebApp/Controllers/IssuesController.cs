@@ -25,7 +25,7 @@ namespace SoftwareCenterWebApp.Controllers
         [HttpGet("[action]")]
         public String GetIssues()
         {
-            var issues = _context.Issues.Include(m => m.Customer).Include(m => m.User).ToList();
+            var issues = _context.Issues.Include(m => m.Customer).Include(m => m.User).Include(m => m.Product).ToList();
 
 
             return JsonConvert.SerializeObject(issues);
@@ -35,7 +35,7 @@ namespace SoftwareCenterWebApp.Controllers
         public async Task<String> GetIssueById(int id)
         {
 
-            var issue = await _context.Issues.Include(m => m.Customer).Include(m => m.User).FirstOrDefaultAsync(i => i.Id == id);
+            var issue = await _context.Issues.Include(m => m.Customer).Include(m => m.User).Include(m => m.Product).FirstOrDefaultAsync(i => i.Id == id);
 
             return JsonConvert.SerializeObject(issue);
         }
@@ -46,7 +46,6 @@ namespace SoftwareCenterWebApp.Controllers
         {
             issue.CreatedDate = DateTime.Now;
             issue.AgreementId = 1;
-            issue.ProductId = 1;
             issue.Status = "Open";
 
             _context.Issues.Add(issue);
