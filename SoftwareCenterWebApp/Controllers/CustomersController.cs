@@ -38,6 +38,16 @@ namespace SoftwareCenterWebApp.Controllers
 
         }
 
+        [HttpDelete("[action]/{id:int}")]
+        public async Task<String> Delete(int id)
+        {
+
+            var customer = await _context.Customers.FindAsync(id);
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
+            return null;
+
+        }
 
     }
 }

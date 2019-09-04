@@ -1,4 +1,5 @@
-<div class="row">
+
+<div class="row" >
   <div class="col col-12 col-lg-12">
     <mat-card>
       <mat-card-header>
@@ -8,9 +9,23 @@
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
           <mat-expansion-panel-header style="position: absolute; right: 0px; top: 0px;"></mat-expansion-panel-header>
-          Dashboard content here!
+          <div class="row" [hidden]="role !== 'Admin'">
+            <div class="col col-12 col-lg-4">
+              Info:
+              
+            </div>
+            <div class="col col-12 col-lg-4">
+              Total issue status:
+              <canvas #issuesChart></canvas>
+            </div>
+            <div class="col col-12 col-lg-4">
+              Issues by product:
+              <canvas #issuesByProductChart></canvas>
+            </div>
+
+          </div>
         </mat-expansion-panel>
       </mat-card-content>
     </mat-card>

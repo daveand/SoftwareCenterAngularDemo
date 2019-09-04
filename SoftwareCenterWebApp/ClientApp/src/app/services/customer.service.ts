@@ -46,7 +46,7 @@ export class CustomerService {
   }
 
   deleteCustomer(id) {
-    return this.http.get(`${this.url}/issues/delete/${id}`);
+    return this.http.delete(`${this.url}api/customers/delete/${id}`);
   }
 
 

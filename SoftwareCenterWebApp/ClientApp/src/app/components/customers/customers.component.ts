@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 import { CustomerService } from '../../services/customer.service';
 import { IssueService } from '../../services/issue.service';
@@ -15,10 +16,11 @@ import { Issue } from '../../models/issue.model';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css']
 })
-export class CustomersComponent implements OnInit {
+export class CustomersComponent implements OnInit, AfterViewInit {
 
   customers: Customer[];
-  displayedColumns = ['name', 'actions'];
+  displayedColumns = ['Name', 'Actions'];
+  public dataSource = new MatTableDataSource<Customer>();
 
 
   createForm: FormGroup;
@@ -38,9 +40,9 @@ export class CustomersComponent implements OnInit {
     this.customerService
       .getCustomers()
       .subscribe((data: Customer[]) => {
-        this.customers = data;
+        this.dataSource.data = data as Customer[];
         console.log('Data requested...');
-        console.log(this.customers);
+        console.log(this.dataSource.data);
       });
   }
 
@@ -69,9 +71,25 @@ export class CustomersComponent implements OnInit {
       });
   }
 
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit() {
     this.fetchCustomers();
 
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.filterPredicate = (data: any, filter) => {
+      const dataStr = JSON.stringify(data).toLowerCase();
+      return dataStr.indexOf(filter) != -1;
+    };
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }
