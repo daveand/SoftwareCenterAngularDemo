@@ -24,6 +24,8 @@ namespace SoftwareCenterWebApp.Data
         public DbSet<AgreementModel> Agreements { get; set; }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<FileModel> Files { get; set; }
+        public DbSet<FavFilesModel> FavFiles { get; set; }
+
 
 
 

@@ -33,6 +33,26 @@ namespace SoftwareCenterWebApp.Controllers
         }
 
         [HttpGet("[action]/{id:int}")]
+        public String GetFavFiles(int id)
+        {
+
+            var favFiles = _context.FavFiles
+                .Include(m => m.User)
+                .Include(m => m.File)
+                .ThenInclude(m => m.Customer)
+                .Include(m => m.File)
+                .ThenInclude(m => m.Product)
+                .Include(m => m.File)
+                .ThenInclude(m => m.User)
+
+                .Where(m => m.UserId == id);
+
+
+            return JsonConvert.SerializeObject(favFiles);
+        }
+
+
+        [HttpGet("[action]/{id:int}")]
         public String GetFilesByIssue(int id)
         {
             var files = _context.Files
@@ -87,6 +107,17 @@ namespace SoftwareCenterWebApp.Controllers
 
         }
 
+        [HttpPost("[action]")]
+        public async Task<String> CreateFavFile([FromBody] FavFilesModel favFile)
+        {
+
+            _context.FavFiles.Add(favFile);
+            var success = await _context.SaveChangesAsync();
+            return null;
+
+        }
+
+
         [HttpGet("[action]/{id}")]
         public async Task<JsonResult> DeleteFile(string id)
         {
@@ -98,6 +129,25 @@ namespace SoftwareCenterWebApp.Controllers
                 _context.Files.Remove(file);
                 await _context.SaveChangesAsync();
                 return Json( new { success = true });
+
+            }
+            catch (Exception)
+            {
+
+                return Json(new { success = false });
+
+            }
+        }
+
+        [HttpGet("[action]/{id:int}")]
+        public async Task<JsonResult> DeleteFavFile(int id)
+        {
+            try
+            {
+                var favFile = await _context.FavFiles.FirstOrDefaultAsync(m => m.Id == id);
+                _context.FavFiles.Remove(favFile);
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
 
             }
             catch (Exception)

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { HttpClient, HttpEventType, HttpParameterCodec } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 import { Customer } from '../../../models/customer.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +10,10 @@ import { MatSnackBar } from '@angular/material';
 import { IssueService } from '../../../services/issue.service';
 import { FileService } from '../../../services/file.service';
 import { Files } from '../../../models/files.model';
+import { saveAs } from 'file-saver';
+
+declare var require: any;
+
 
 @Component({
   selector: 'app-issuedetails',
@@ -23,6 +28,7 @@ export class IssuedetailsComponent implements OnInit, AfterViewInit {
   issue: any = {};
 
   constructor(
+    private location: Location,
     private http: HttpClient,
     private issueService: IssueService,
     private fileService: FileService,
@@ -82,8 +88,8 @@ export class IssuedetailsComponent implements OnInit, AfterViewInit {
         this.http.get(this.baseUrl + 'api/blob/deletefile/' + filePath).subscribe(result => {
           console.log(result);
         });
-        this.showBlobs(null);
-        this.fetchFiles();
+        //this.showBlobs(null);
+        //this.fetchFiles();
       }
     }, error => console.error(error));
   }
@@ -124,6 +130,8 @@ export class IssuedetailsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
+  goBack() {
+    this.location.back();
+  }
 
 }

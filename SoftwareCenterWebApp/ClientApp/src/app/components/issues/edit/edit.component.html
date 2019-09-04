@@ -51,7 +51,7 @@
         </mat-form-field>
         <mat-divider></mat-divider>
         <br><br>
-        <button mat-raised-button color="accent" routerLink="/issues" skipLocationChange>Back</button>&nbsp;
+        <button mat-raised-button color="accent" (click)="goBack()" skipLocationChange>Back</button>&nbsp;
         <button type="submit" (click)="updateIssue(title.value, responsible.value, customer.value, product.value, description.value, notes.value, remedy.value, priority.value, status.value)" [disabled]="updateForm.pristine || updateForm.invalid" mat-raised-button color="primary">Save</button>
       </form>
     </mat-card>

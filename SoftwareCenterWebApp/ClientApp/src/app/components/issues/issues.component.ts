@@ -15,6 +15,7 @@ import { Product } from '../../models/product.model';
 import { CustomersComponent } from '../../components/customers/customers.component';
 import { ProductsComponent } from '../../components/products/products.component';
 import { ProductService } from '../../services/product.service';
+import { Location } from '@angular/common';
 
 
 export interface DialogData {
@@ -50,7 +51,8 @@ export class IssuesComponent implements OnInit, AfterViewInit {
     private issueService: IssueService,
     private productService: ProductService,
     private fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private location: Location) {
     this.createForm = this.fb.group({
       title: ['', Validators.required],
       userId: '',
@@ -108,7 +110,7 @@ export class IssuesComponent implements OnInit, AfterViewInit {
       .subscribe((data: Issue[]) => {
         this.dataSource.data = data as Issue[];
         console.log('Data requested...');
-        console.log(this.issues);
+        console.log(this.dataSource.data);
       });
   }
 

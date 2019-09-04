@@ -276,6 +276,14 @@ export class FilesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  addFavFile(fileId) {
+    const user = this.users.find(u => u.Email === this.adalService.userInfo.userName);
+    this.fileService.addFavFile(user.Id, fileId).subscribe(() => {
+      this.snackBar.open('Added to favourites!', 'Close');
+    });
+  }
+
+
   openCustomerDialog(): void {
     const dialogRef = this.dialog.open(CustomersComponent, {
       //width: '250px',

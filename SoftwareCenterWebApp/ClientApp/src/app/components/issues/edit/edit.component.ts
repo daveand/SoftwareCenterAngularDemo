@@ -8,6 +8,7 @@ import { UsersService } from '../../../services/users.service';
 import { ProductService } from '../../../services/product.service';
 import { FileService } from '../../../services/file.service';
 import { HttpClient, HttpEventType, HttpParameterCodec } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 import { Issue } from '../../../models/issue.model';
 import { User } from '../../../models/user.model';
@@ -48,6 +49,7 @@ export class IssuesEditComponent implements OnInit {
 
 
   constructor(
+    private location: Location,
     private http: HttpClient,
     private issueService: IssueService,
     private customerService: CustomerService,
@@ -171,7 +173,8 @@ export class IssuesEditComponent implements OnInit {
       this.snackBar.open('Issue updated successfully', 'OK', {
         duration: 3000
       });
-      this.router.navigate(['/issues']);
+      //this.router.navigate(['/issues']);
+      this.location.back();
     });
   }
 
@@ -237,6 +240,9 @@ export class IssuesEditComponent implements OnInit {
     });
   }
 
+  goBack() {
+    this.location.back();
+  }
 
 
 

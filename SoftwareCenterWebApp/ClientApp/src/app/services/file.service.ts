@@ -17,6 +17,10 @@ export class FileService {
     return this.http.get(this.url + 'api/files/getfiles');
   }
 
+  getFavFiles(id) {
+    return this.http.get(`${this.url}api/files/getfavfiles/${id}`);
+  }
+
   getFilesByIssue(id) {
     return this.http.get(`${this.url}api/files/getfilesbyissue/${id}`);
   }
@@ -39,6 +43,21 @@ export class FileService {
       })
     });
   }
+
+  addFavFile(userId, fileId) {
+    const favFile = {
+      userId,
+      fileId
+    };
+    console.log('FavFile ', favFile);
+
+    return this.http.post(`${this.url}api/files/createfavfile`, favFile, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    });
+  }
+
 
   addIssueFile(userId, type, customerId, productId, fileName, filePath, issueId) {
     const file = {
@@ -65,5 +84,12 @@ export class FileService {
     return this.http.get(`${this.url}api/files/deletefile/${id}`)
 
   }
+
+  deleteFavFile(id) {
+    console.log('fileService ', id);
+    return this.http.get(`${this.url}api/files/deletefavfile/${id}`)
+
+  }
+
 
 }

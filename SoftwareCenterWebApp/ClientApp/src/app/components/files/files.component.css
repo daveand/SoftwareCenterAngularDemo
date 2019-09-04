@@ -98,3 +98,7 @@ th.mat-header-cell {
   align-items: flex-end;
   flex-direction: column;
 }
+
+.row {
+  margin-bottom: 20px;
+}
