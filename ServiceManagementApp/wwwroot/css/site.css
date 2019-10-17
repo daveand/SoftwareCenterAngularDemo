@@ -12,10 +12,42 @@ a.navbar-brand {
 html {
   font-size: 14px;
 }
+
+h2 {
+    font-size: 1.5em;
+}
+
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 14px;
-  }
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn {
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    .btn-sm {
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    .frame {
+        margin: 0px;
+        border: 1px solid silver;
+        border-radius: 10px;
+        padding: 10px 5px 10px 5px !important;
+    }
 }
 
 .border-top {
@@ -57,4 +89,20 @@ body {
 
 .container {
     max-width: 1500px;
+}
+
+.frame {
+    margin: 0px;
+    border: 1px solid silver;
+    border-radius: 10px;
+    padding: 20px;
+    
+}
+
+.column-right {
+    text-align: right;
+}
+
+table a:hover {
+    text-decoration: none;
 }

@@ -21,42 +21,48 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Service Management</a>
+                <img src="~/img/1280px-Atlas_Copco_logo.svg.png" alt="Logo" height="30" />
+                <a class="navbar-brand" style="margin-left: 10px; margin-right: 20px;" asp-area="" asp-controller="Home" asp-action="Index">
+                    Service Management
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Issues" asp-action="Index">Issues</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Actions" asp-action="Index">Actions</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
-                        </li>
-                        @*<li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>*@
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Administration
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Customers" asp-action="Index">Customers</a>
-                                <a class="dropdown-item" asp-controller="Products" asp-action="Index">Products</a>
-                                <a class="dropdown-item" asp-controller="Agreements" asp-action="Index">Agreements</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-controller="Users" asp-action="Index">Users</a>
-                            </div>
-                        </li>
-                    </ul>
+                    @if (((ClaimsIdentity)User.Identity).IsAuthenticated)
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Issues" asp-action="Index">Issues</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Actions" asp-action="Index">Actions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                            </li>
+                            @*<li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </li>*@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Administration
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-controller="Customers" asp-action="Index">Customers</a>
+                                    <a class="dropdown-item" asp-controller="Products" asp-action="Index">Products</a>
+                                    <a class="dropdown-item" asp-controller="Agreements" asp-action="Index">Agreements</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Users" asp-action="Index">Users</a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </nav>
