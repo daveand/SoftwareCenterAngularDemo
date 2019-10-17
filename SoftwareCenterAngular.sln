@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareCenterWebApp", "SoftwareCenterWebApp\SoftwareCenterWebApp.csproj", "{42870F05-C849-4140-836B-3F8641D976ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobServiceTest", "BlobServiceTest\BlobServiceTest.csproj", "{5F1D779A-A8DE-4C7C-BE88-4477D97BF697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlobServiceTest", "BlobServiceTest\BlobServiceTest.csproj", "{5F1D779A-A8DE-4C7C-BE88-4477D97BF697}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceManagementApp", "ServiceManagementApp\ServiceManagementApp.csproj", "{882B3424-8F71-4204-BDD4-71DED1A9398F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5F1D779A-A8DE-4C7C-BE88-4477D97BF697}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F1D779A-A8DE-4C7C-BE88-4477D97BF697}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F1D779A-A8DE-4C7C-BE88-4477D97BF697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{882B3424-8F71-4204-BDD4-71DED1A9398F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882B3424-8F71-4204-BDD4-71DED1A9398F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882B3424-8F71-4204-BDD4-71DED1A9398F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882B3424-8F71-4204-BDD4-71DED1A9398F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
