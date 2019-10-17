@@ -7,7 +7,7 @@ namespace ServiceManagementApp.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Responsible { get; set; }
+        public int UserId { get; set; }
         public int CustomerId { get; set; }
         public int AgreementId { get; set; }
         public int ProductId { get; set; }
@@ -21,5 +21,6 @@ namespace ServiceManagementApp.Models
         public virtual Agreements Agreement { get; set; }
         public virtual Customers Customer { get; set; }
         public virtual Products Product { get; set; }
+        public virtual Users User { get; set; }
     }
 }

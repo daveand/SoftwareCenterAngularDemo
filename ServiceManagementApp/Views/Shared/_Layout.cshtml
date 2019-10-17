@@ -35,7 +35,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Issues" asp-action="Index">Issues</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Actions" asp-action="Index">Actions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                        </li>
                         @*<li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>*@
@@ -47,6 +52,8 @@
                                 <a class="dropdown-item" asp-controller="Customers" asp-action="Index">Customers</a>
                                 <a class="dropdown-item" asp-controller="Products" asp-action="Index">Products</a>
                                 <a class="dropdown-item" asp-controller="Agreements" asp-action="Index">Agreements</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-controller="Users" asp-action="Index">Users</a>
                             </div>
                         </li>
                     </ul>

@@ -21,7 +21,7 @@ namespace ServiceManagementApp.Controllers
         // GET: Actions
         public async Task<IActionResult> Index()
         {
-            var softwareCenterWebAppDbContext = _context.Actions.Include(a => a.Agreement).Include(a => a.Customer).Include(a => a.Product);
+            var softwareCenterWebAppDbContext = _context.Actions.Include(a => a.Agreement).Include(a => a.Customer).Include(a => a.Product).Include(a => a.User);
             return View(await softwareCenterWebAppDbContext.ToListAsync());
         }
 
@@ -37,6 +37,7 @@ namespace ServiceManagementApp.Controllers
                 .Include(a => a.Agreement)
                 .Include(a => a.Customer)
                 .Include(a => a.Product)
+                .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (actions == null)
             {
@@ -52,6 +53,7 @@ namespace ServiceManagementApp.Controllers
             ViewData["AgreementId"] = new SelectList(_context.Agreements, "Id", "Id");
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -60,7 +62,7 @@ namespace ServiceManagementApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Responsible,CustomerId,AgreementId,ProductId,Description,Notes,CreatedDate,DoneDate,Priority,Status")] Actions actions)
+        public async Task<IActionResult> Create([Bind("Id,Title,UserId,CustomerId,AgreementId,ProductId,Description,Notes,CreatedDate,DoneDate,Priority,Status")] Actions actions)
         {
             if (ModelState.IsValid)
             {
@@ -71,6 +73,7 @@ namespace ServiceManagementApp.Controllers
             ViewData["AgreementId"] = new SelectList(_context.Agreements, "Id", "Id", actions.AgreementId);
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", actions.CustomerId);
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", actions.ProductId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", actions.UserId);
             return View(actions);
         }
 
@@ -90,6 +93,7 @@ namespace ServiceManagementApp.Controllers
             ViewData["AgreementId"] = new SelectList(_context.Agreements, "Id", "Id", actions.AgreementId);
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", actions.CustomerId);
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", actions.ProductId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", actions.UserId);
             return View(actions);
         }
 
@@ -98,7 +102,7 @@ namespace ServiceManagementApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Responsible,CustomerId,AgreementId,ProductId,Description,Notes,CreatedDate,DoneDate,Priority,Status")] Actions actions)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,UserId,CustomerId,AgreementId,ProductId,Description,Notes,CreatedDate,DoneDate,Priority,Status")] Actions actions)
         {
             if (id != actions.Id)
             {
@@ -128,6 +132,7 @@ namespace ServiceManagementApp.Controllers
             ViewData["AgreementId"] = new SelectList(_context.Agreements, "Id", "Id", actions.AgreementId);
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", actions.CustomerId);
             ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", actions.ProductId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", actions.UserId);
             return View(actions);
         }
 
@@ -143,6 +148,7 @@ namespace ServiceManagementApp.Controllers
                 .Include(a => a.Agreement)
                 .Include(a => a.Customer)
                 .Include(a => a.Product)
+                .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (actions == null)
             {
