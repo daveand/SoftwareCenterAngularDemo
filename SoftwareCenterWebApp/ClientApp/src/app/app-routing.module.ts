@@ -10,9 +10,15 @@ import { FilesComponent } from './components/files/files.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductsComponent } from './components/products/products.component';
+import { KnowledgesComponent } from './components/knowledges/knowledges.component';
+import { KnowledgeEditComponent } from './components/knowledges/edit/edit.component';
+import { KnowledgedetailsComponent } from './components/knowledges/details/details.component';
 
 
 const routes: Routes = [
+  { path: 'knowledges', component: KnowledgesComponent },
+  { path: 'knowledgedetails/:id', component: KnowledgedetailsComponent },
+  { path: 'knowledges/edit/:id', component: KnowledgeEditComponent },
   { path: 'search', component: SearchComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'products', component: ProductsComponent },

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 import { CustomerService } from '../../services/customer.service';
 import { ProductService } from '../../services/product.service';
@@ -18,10 +19,11 @@ import { Product } from '../../models/product.model';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, AfterViewInit {
 
   products: Product[];
-  displayedColumns = ['name', 'actions'];
+  displayedColumns = ['Title', 'Actions'];
+  public dataSource = new MatTableDataSource<Product>();
 
 
   createForm: FormGroup;
@@ -41,9 +43,9 @@ export class ProductsComponent implements OnInit {
     this.productService
       .getProducts()
       .subscribe((data: Product[]) => {
-        this.products = data;
+        this.dataSource.data = data as Product[];
         console.log('Data requested...');
-        console.log(this.products);
+        console.log(this.dataSource.data);
       });
   }
 
@@ -72,9 +74,26 @@ export class ProductsComponent implements OnInit {
       });
   }
 
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   ngOnInit() {
     this.fetchProducts();
 
   }
+
+  ngAfterViewInit(): void {
+    this.dataSource.filterPredicate = (data: any, filter) => {
+      const dataStr = JSON.stringify(data).toLowerCase();
+      return dataStr.indexOf(filter) != -1;
+    };
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 
 }

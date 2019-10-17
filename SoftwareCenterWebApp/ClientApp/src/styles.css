@@ -8,4 +8,8 @@ html, body {
   height: 100vh;
   overflow-x: hidden;
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: rgb(217, 217, 217);
+}

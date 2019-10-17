@@ -60,7 +60,10 @@ import { AuthGuard } from './auth.guard';
 import { LogoutComponent } from './components/logout/logout.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { ProductsComponent } from './components/products/products.component';
-
+import { KnowledgeEditComponent } from './components/knowledges/edit/edit.component';
+// import { IssueService } from './issue.service';
+import { KnowledgesComponent, KnowledgesCreateDialog } from './components/knowledges/knowledges.component';
+import { KnowledgedetailsComponent } from './components/knowledges/details/details.component';
 import { SearchComponent } from './components/search/search.component';
 
 
@@ -76,6 +79,10 @@ import { SearchComponent } from './components/search/search.component';
     LogoutComponent,
     CustomersComponent,
     ProductsComponent,
+    KnowledgeEditComponent,
+    KnowledgesComponent,
+    KnowledgesCreateDialog,
+    KnowledgedetailsComponent,
     SearchComponent
   ],
   imports: [
