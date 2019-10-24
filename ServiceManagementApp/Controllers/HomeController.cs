@@ -13,7 +13,7 @@ using ServiceManagementApp.Models.ViewModels;
 
 namespace ServiceManagementApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly SoftwareCenterWebAppDbContext _context;

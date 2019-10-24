@@ -43,7 +43,6 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="'/knowledges'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">help</mat-icon>Knowledge DB </a>
       </li>
-      <div *ngIf="role === 'Admin' || role === 'SWTech'">
         <li class="nav-item">
           <a class="nav-link" [routerLink]="'/issues'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">report_problem</mat-icon>Issues </a>
         </li>
@@ -61,7 +60,6 @@
         </li>
 
 
-      </div>
     </ul>
 
 
@@ -82,7 +80,6 @@
           <li class="nav-item">
             <a class="nav-link" [routerLink]="'/knowledges'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">help</mat-icon>Knowledge DB </a>
           </li>
-          <div *ngIf="role === 'Admin' || role === 'SWTech'">
             <li class="nav-item">
               <a class="nav-link" [routerLink]="'/issues'"><mat-icon class="menu-icon" aria-hidden="false" aria-label="Example user verified icon">report_problem</mat-icon>Issues </a>
             </li>
@@ -100,7 +97,6 @@
             </li>
 
 
-          </div>
         </ul>
       </div>
     </nav>
