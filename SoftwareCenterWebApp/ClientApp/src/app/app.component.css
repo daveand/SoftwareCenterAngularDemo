@@ -1,0 +1,111 @@
+.navbar {
+  background-color: rgba(53, 63, 72, 1) !important;
+  /*background-color: steelblue;*/
+  color: white;
+}
+
+
+.menu-icon {
+  margin-left: 0px;
+  margin-right: 10px;
+  color: rgba(53, 63, 72, 1);
+}
+
+.arrow-box {
+  width: 25px;
+  margin-top: 10px;
+  margin-left: -1px;
+  border: 1px solid lightgrey;
+  border-left: 1px solid white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: white;
+  color: gray;
+}
+
+.mat-card-top {
+  height: 40px;
+  padding: 5px 5px 5px 5px;
+  margin-top: -35px;
+  /*margin-bottom: -10px;*/
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 60px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  background-color: white;
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: black;
+}
+
+.sidebar a:hover {
+  color: grey;
+}
+
+.navbar .nav-link {
+  font-weight: 500;
+  color: white;
+}
+
+/*.navbar a:hover {
+  color: grey;
+}*/
+
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Content
+ */
+
+[role="main"] {
+  padding-top: 133px; /* Space for fixed navbar */
+}
+
+@media (min-width: 768px) {
+  [role="main"] {
+    padding-top: 48px; /* Space for fixed navbar */
+  }
+}

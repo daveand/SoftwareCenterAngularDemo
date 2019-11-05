@@ -1,0 +1,17 @@
+.create-form {
+  min-width: 150px;
+  width: 100%;
+}
+
+.field-full-width {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  font-size: 8px;
+}
+
+.mat-column-right {
+  text-align: center;
+}

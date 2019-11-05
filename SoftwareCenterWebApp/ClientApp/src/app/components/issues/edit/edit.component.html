@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col col-12 col-lg-6">
+    <mat-card>
+      <section class="mat-typography">
+        <h3>Update Issue</h3>
+      </section>
+      <mat-divider></mat-divider>
+      <br>
+      <form [formGroup]="updateForm" class="edit-form">
+        <mat-form-field class="field-full-width">
+          <input matInput placeholder="Issue Title" formControlName="title" #title>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Responsible" formControlName="responsible" #responsible>
+            <mat-option *ngFor="let user of users" [value]="user.Id">{{user.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Customer" formControlName="customer" #customer>
+            <mat-option *ngFor="let customer of customers" [value]="customer.Id">{{customer.Name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Product" formControlName="product" #product>
+            <mat-option *ngFor="let product of products" [value]="product.Id">{{product.Title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="field-full-width">
+          <textarea matInput placeholder="Description" formControlName="description" #description></textarea>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <textarea matInput placeholder="Notes" formControlName="notes" #notes></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Priority" formControlName="priority" #priority>
+            <mat-option *ngFor="let item of priorities" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-select placeholder="Status" formControlName="status" #status>
+            <mat-option *ngFor="let item of statuses" (click)="changeStatus(item)" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <textarea matInput placeholder="Remedy" formControlName="remedy" disabled="disabled" #remedy></textarea>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <br><br>
+        <button mat-raised-button color="accent" (click)="goBack()" skipLocationChange>Back</button>&nbsp;
+        <button type="submit" (click)="updateIssue(title.value, responsible.value, customer.value, product.value, description.value, notes.value, remedy.value, priority.value, status.value)" [disabled]="updateForm.pristine || updateForm.invalid" mat-raised-button color="primary">Save</button>
+      </form>
+    </mat-card>
+  </div>
+  <div class="col col-12 col-lg-6">
+
+    <mat-card>
+      <section class="mat-typograpghy">
+        <h3>Upload Files</h3>
+      </section>
+      <mat-divider></mat-divider>
+      <br><br>
+      <form [formGroup]="createFileForm" class="create-form">
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Uploaded by" formControlName="responsible" #responsible>
+            <mat-option *ngFor="let user of users" [value]="user.Id">{{user.Name}} ({{user.Email}})</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-select placeholder="Product" formControlName="productId" #productId>
+            <mat-option (click)="openProductDialog()">New Product...</mat-option>
+            <mat-option *ngFor="let product of products" [value]="product.Id">{{product.Title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <input type="file" name="filesToUpload" multiple="multiple" formControlName="files" #files (change)="fileChangeEvent($event)">
+        <br>
+        <br>
+        <button type="submit" (click)="startUpload(responsible.value, productId.value)" [disabled]="createForm.pristine || createForm.invalid" mat-raised-button color="primary">Upload</button>
+      </form>
+      <div class="parent">
+        <span class="" *ngIf="progress > 0">
+          <br />
+          <!--{{progress}}-->
+          <mat-spinner [diameter]="30" *ngIf="!message"></mat-spinner>
+        </span>
+        <span class="" *ngIf="message">
+          {{message}}
+        </span>
+      </div>
+
+    </mat-card>
+  </div>
+
+
+</div>
