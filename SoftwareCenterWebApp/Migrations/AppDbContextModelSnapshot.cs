@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareCenterWebApp.Data;
 
@@ -15,15 +14,12 @@ namespace SoftwareCenterWebApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("SoftwareCenterWebApp.Models.ActionModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AgreementId");
 
@@ -61,8 +57,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.AgreementModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
 
@@ -76,8 +71,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.CustomerContactModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("CustomerId");
 
@@ -99,8 +93,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.CustomerModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
@@ -112,8 +105,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.FavFilesModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("FileId");
 
@@ -131,8 +123,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.FileModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("AgreementId");
 
@@ -174,8 +165,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.IssueModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("AgreementId");
 
@@ -217,8 +207,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.KnowledgeModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("AgreementId");
 
@@ -254,8 +243,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.ProductModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Title");
 
@@ -267,8 +255,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.ProjectModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("ClosedDate");
 
@@ -298,8 +285,7 @@ namespace SoftwareCenterWebApp.Migrations
             modelBuilder.Entity("SoftwareCenterWebApp.Models.UserModel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email");
 

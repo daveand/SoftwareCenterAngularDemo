@@ -39,15 +39,14 @@ namespace SoftwareCenterWebApp
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<AppDbContext>(options =>
-              options.UseSqlServer(
-                  Configuration.GetConnectionString("AzureDb")));
+              options.UseSqlite("Data Source=demodb.db"));
 
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:44328",
+                    builder.WithOrigins("http://localhost:50168",
                                         "https://softwarecenter.azurewebsites.net")
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
